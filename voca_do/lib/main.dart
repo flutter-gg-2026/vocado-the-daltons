@@ -38,10 +38,9 @@ class MainApp extends StatelessWidget {
           // themeMode: state.themeMode,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          debugShowCheckedModeBanner: true,
+          debugShowCheckedModeBanner: false,
         );
       },
     );
   }
 }
-
