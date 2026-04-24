@@ -6,7 +6,7 @@ import 'package:voca_do/core/errors/network_exceptions.dart';
 
 
 abstract class BaseTaskViewerRemoteDataSource {
-  Future<TaskViewerModel> getTaskViewer();
+Future<List<TaskViewerModel>> getUserTasks(String assigneeId);
 }
 
 
@@ -23,11 +23,17 @@ class TaskViewerRemoteDataSource implements BaseTaskViewerRemoteDataSource {
 
 
     @override
-  Future<TaskViewerModel> getTaskViewer() async {
-    try {
-      return TaskViewerModel(id: 1, firstName: "Last Name", lastName: "First Name");
-    } catch (error) {
-     throw FailureExceptions.getException(error);
-    }
+ Future<List<TaskViewerModel>> getTaskViewer(String assigneeId) async {
+    final response = await _supabaseClient
+        .from('tasks')
+        .select()
+        .eq('assignee_id', assigneeId)
+        .order('due_date', ascending: true);
+
+    return response
+        .map<TaskViewerModel>(
+          (json) => TaskViewerModel.fromJson(json),
+        )
+        .toList();
   }
 }
