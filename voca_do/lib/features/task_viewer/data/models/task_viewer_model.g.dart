@@ -8,14 +8,18 @@ part of 'task_viewer_model.dart';
 
 _TaskViewerModel _$TaskViewerModelFromJson(Map<String, dynamic> json) =>
     _TaskViewerModel(
-      id: (json['id'] as num).toInt(),
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
+      id: json['id'] as String,
+      title: json['title'] as String,
+      assigneeId: json['assignee_id'] as String,
+      dueDate: json['due_date'] as String,
+      status: json['status'] as String,
     );
 
 Map<String, dynamic> _$TaskViewerModelToJson(_TaskViewerModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
+      'title': instance.title,
+      'assignee_id': instance.assigneeId,
+      'due_date': instance.dueDate,
+      'status': instance.status,
     };
