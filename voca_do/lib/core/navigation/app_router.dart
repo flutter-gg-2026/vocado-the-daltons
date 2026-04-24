@@ -9,6 +9,9 @@ import 'package:voca_do/features/task_viewer/presentation/pages/task_viewer_feat
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 import 'package:voca_do/features/admin_home_screen/presentation/pages/admin_home_screen_feature_screen.dart';
 import 'package:voca_do/features/admin_home_screen/presentation/cubit/admin_home_screen_cubit.dart';
+import 'package:voca_do/features/add_task_screen/presentation/pages/add_task_screen_feature_screen.dart';
+import 'package:voca_do/features/add_task_screen/presentation/cubit/add_task_screen_cubit.dart';
+
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -44,7 +47,15 @@ class AppRouter {
           child: const AdminHomeScreenFeatureScreen(),
         ),
       ),
-    ],
+    
+  GoRoute(
+    path: Routes.addTaskScreen,
+    builder: (context, state) => BlocProvider(
+          create: (context) => AddTaskScreenCubit(GetIt.I.get()),
+          child: const AddTaskScreenFeatureScreen(),
+        ),
+  ),
+],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:voca_do/core/navigation/routers.dart';
 import 'package:voca_do/features/admin_home_screen/presentation/cubit/admin_home_screen_cubit.dart';
-import 'package:voca_do/features/sub/audio_feature/presentation/pages/audio_feature_feature_widget.dart';
 
 class AdminHomeScreenFeatureScreen extends StatelessWidget {
   const AdminHomeScreenFeatureScreen({super.key});
@@ -10,17 +11,23 @@ class AdminHomeScreenFeatureScreen extends StatelessWidget {
     final _ = context.read<AdminHomeScreenCubit>();
 
     return Scaffold(
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(24),
+        child: FloatingActionButton.large(
+          onPressed: () {
+            context.push(Routes.addTaskScreen);
+          },
+          child: Icon(Icons.add),
+        ),
+      ),
       appBar: AppBar(
         title: const Text(
-          'Audio Transcription',
+          'Home',
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         backgroundColor: Colors.blueAccent,
       ),
-      body: Column(
-        mainAxisAlignment: .center,
-        children: [Center(child: AudioFeatureFeatureWidget())],
-      ),
+      body: Column(mainAxisAlignment: .center, children: []),
     );
   }
 }

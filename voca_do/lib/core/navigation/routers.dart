@@ -5,4 +5,5 @@ class Routes {
   static const String taskCreator = '/taskCreator';
   static const String taskViewer = '/taskViewer';
   static const String adminHomeScreen = '/adminHomeScreen';
+  static const String addTaskScreen = '/addTaskScreen';
 }

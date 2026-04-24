@@ -1,7 +1,9 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:voca_do/core/extensions/font_extensions.dart';
+import 'package:voca_do/core/widgets/audio_loading_widget.dart';
 import 'package:voca_do/features/sub/audio_feature/presentation/cubit/audio_feature_cubit.dart';
 import 'package:voca_do/features/sub/audio_feature/presentation/cubit/audio_feature_state.dart';
 
@@ -45,14 +47,20 @@ class AudioFeatureFeatureWidget extends StatelessWidget {
                         // ==============================================================
                         shape: .circle,
                       ),
-                      child: Icon(Icons.mic, color: Colors.white),
+                      child: Pulse(
+                        animate:
+                            state is AudioFeatureRecordingState &&
+                            state.isRecording,
+                        infinite: true,
+                        child: Icon(Icons.mic, color: Colors.white, size: 32),
+                      ),
                     ),
                     SizedBox(height: 32),
 
                     // ==============================================================
                     // ==============================================================
                     if (state is AudioFeatureTranscribingState)
-                      const CircularProgressIndicator(),
+                      const AudioLoadingWidget(),
 
                     // ==============================================================
                     // ==============================================================
