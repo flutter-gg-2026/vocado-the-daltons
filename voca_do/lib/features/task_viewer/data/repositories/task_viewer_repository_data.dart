@@ -18,7 +18,7 @@ class TaskViewerRepositoryData implements TaskViewerRepositoryDomain {
     String assigneeId,
   ) async {
     try {
-      final tasks = await _remoteDataSource.getUserTasks(assigneeId);
+      final tasks = await remoteDataSource.getUserTasks(assigneeId);
 
       return Success(tasks.map((task) => task.toEntity()).toList());
     } catch (error) {
