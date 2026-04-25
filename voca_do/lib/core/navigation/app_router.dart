@@ -39,7 +39,7 @@ import 'package:voca_do/features/task_creator/home/presentation/cubit/home_cubit
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-   initialLocation: Routes.login ,
+   initialLocation: Routes.taskViewer ,
     routes: [
       // GoRoute(
       //   path: Routes.splash,
@@ -125,7 +125,24 @@ GoRoute(
     );
   },
 ),
-  
+  //  GoRoute(
+  //       path: Routes.taskViewer,
+  //       builder: (context, state) {
+  //         final extra = state.extra as Map<String, dynamic>?;
+  //         if (extra == null || extra['assigneeId'] == null) {
+  //           return const Scaffold(
+  //             body: Center(child: Text("Invalid Task Data")),
+  //           );
+  //         }
+  //         return BlocProvider(
+  //           create: (context) => GetIt.I<TaskViewerCubit>(),
+  //           child: TaskIndexScreen(
+  //             assigneeId: extra['assigneeId'] as String,
+  //             userName: extra['userName'] as String? ?? 'Guest',
+  //           ),
+  //         );
+  //       },
+  //     ),
 
 GoRoute(
   path: Routes.taskViewer,

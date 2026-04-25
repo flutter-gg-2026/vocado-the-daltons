@@ -139,7 +139,7 @@ class LoginFeatureScreen extends HookWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                context.pop(Routes.taskCreator);
+                                context.push(Routes.signUp);
                               },
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.zero,
