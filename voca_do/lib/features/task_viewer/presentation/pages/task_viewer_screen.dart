@@ -22,68 +22,70 @@ class _TaskViewerScreenState extends State<TaskViewerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF7F8FA),
+      backgroundColor: const Color(0xffF4F5F7),
       body: SafeArea(
         child: BlocBuilder<TaskViewerCubit, TaskViewerState>(
           builder: (context, state) {
             if (state is TaskViewerLoadingState) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Center(child: CircularProgressIndicator());
             }
 
             if (state is TaskViewerErrorState) {
-              return Center(
-                child: Text(state.message),
-              );
+              return Center(child: Text(state.message));
             }
 
             if (state is TaskViewerSuccessState) {
               final tasks = state.tasks;
 
               final newTasks = _getNewTasks(tasks);
-              final inProgressTasks = _getInProgressTasks(tasks);
               final lateTasks = _getLateTasks(tasks);
+              final inProgressTasks = _getInProgressTasks(tasks);
 
               return SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 24,
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'My Tasks',
-                      style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
+                    const Center(
+                      child: Text.rich(
+                        TextSpan(
+                          text: 'Hello,',
+                          children: [
+                            TextSpan(
+                              text: 'USER',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        style: TextStyle(fontSize: 16),
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Track your assigned tasks',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey,
-                      ),
-                    ),
+
                     const SizedBox(height: 28),
 
                     TaskHorizontalSection(
                       title: 'New',
                       tasks: newTasks,
+                      type: TaskSectionType.newTask,
                     ),
 
-                    const SizedBox(height: 28),
-
-                    TaskHorizontalSection(
-                      title: 'In Progress',
-                      tasks: inProgressTasks,
-                    ),
-
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 24),
 
                     TaskHorizontalSection(
                       title: 'Late',
                       tasks: lateTasks,
+                      type: TaskSectionType.late,
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    TaskHorizontalSection(
+                      title: 'In Progress',
+                      tasks: inProgressTasks,
+                      type: TaskSectionType.inProgress,
                     ),
                   ],
                 ),
