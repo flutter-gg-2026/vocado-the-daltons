@@ -19,7 +19,7 @@ import 'package:voca_do/features/add_task_screen/presentation/cubit/add_task_scr
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.taskViewer,
+   initialLocation: Routes.login ,
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -27,6 +27,15 @@ class AppRouter {
           return Scaffold(body: Center(child: Text("splash screen")));
         }, // SplashScreen
       ),
+
+    GoRoute(
+        path: Routes.login,
+        builder: (context, state) => BlocProvider(
+          create: (context) => LoginCubit(GetIt.I.get()),
+          child: const LoginFeatureScreen(),
+        ),
+      ),
+
 
 GoRoute(
   path: Routes.taskList,
@@ -43,28 +52,22 @@ GoRoute(
     );
   },
 ),
-      GoRoute(
-        path: Routes.login,
-        builder: (context, state) => BlocProvider(
-          create: (context) => LoginCubit(GetIt.I.get()),
-          child: const LoginFeatureScreen(),
-        ),
-      ),
-
+  
 
 GoRoute(
   path: Routes.taskViewer,
   builder: (context, state) {
+    final extra = state.extra as Map<String, dynamic>;
+
     return BlocProvider(
       create: (context) => GetIt.I<TaskViewerCubit>(),
-      child: const TaskIndexScreen(
-        assigneeId: '76ce4e3a-273d-4ace-afda-5af555288291',
-        userName: 'Leen',
+      child: TaskIndexScreen(
+        assigneeId: extra['assigneeId'] as String,
+        userName: extra['userName'] as String,
       ),
     );
   },
 ),
-
 
       GoRoute(
         path: Routes.adminHomeScreen,
