@@ -9,6 +9,7 @@ Future<void> setup() async {
   await Supabase.initialize(
     url: dotenv.env['url_supabase'].toString(),
     anonKey: dotenv.env['key_supabase'].toString(),
+    
   );
   //----------------------------------------------------------------------------
   await GetStorage.init();

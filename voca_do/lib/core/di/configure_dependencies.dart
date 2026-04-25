@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:voca_do/features/auth/login/di/login_di.dart';
 import 'package:voca_do/features/task_creator/di/task_creator_di.dart';
 import 'package:voca_do/features/task_viewer/di/task_viewer_di.dart';
+import 'package:voca_do/features/auth/sign_up/di/sign_up_di.dart';
 
 @InjectableInit(
   initializerName: 'init', 
@@ -18,4 +19,5 @@ Future<void> configureDependencies() async {
     configureLogin(getIt);
     configureTaskCreator(getIt);
     configureTaskViewer(getIt);
+    configureSignUp(getIt);
 }

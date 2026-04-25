@@ -5,59 +5,53 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:voca_do/core/constants/app_colors.dart';
-import 'package:voca_do/core/constants/app_enums.dart';
 import 'package:voca_do/core/extensions/context_extensions.dart';
 import 'package:voca_do/core/navigation/routers.dart';
 import 'package:voca_do/core/utils/validators.dart';
-import 'package:voca_do/features/auth/login/presentation/cubit/login_cubit.dart';
-import 'package:voca_do/features/auth/login/presentation/cubit/login_state.dart';
+import 'package:voca_do/features/auth/sign_up/presentation/cubit/sign_up_cubit.dart';
+import 'package:voca_do/features/auth/sign_up/presentation/cubit/sign_up_state.dart';
 
-class LoginFeatureScreen extends HookWidget {
-  const LoginFeatureScreen({super.key});
+class SignUpFeatureScreen extends HookWidget {
+  const SignUpFeatureScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<LoginCubit>();
+    final cubit = context.read<SignUpCubit>();
+    final nameController = useTextEditingController(text: "ghayda");
     final emailController = useTextEditingController(
       text: "ghayd25@outlook.sa",
     );
     final passwordController = useTextEditingController(text: "gh123456");
-
     final globalKey = GlobalKey<FormState>();
 
     return Scaffold(
       appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: BlocListener<LoginCubit, LoginState>(
-          listener: (context, state) {
-            context.hideLoading();
-            switch (state) {
-              case LoginLoadingState _:
-                context.showLoading();
-                break;
-              case LoginSuccessState _:
-                if (state.role == UserRole.admin) {
-                  context.go(Routes.taskCreator);
-                } else {
-                  context.go(Routes.taskViewer);
-                }
-                break;
-
-              case LoginErrorState _:
-                context.showSnackBar(state.message, isError: true);
-                break;
-              default:
-            }
-          },
+      body: BlocListener<SignUpCubit, SignUpState>(
+        listener: (context, state) {
+          context.hideLoading();
+          switch (state) {
+            case SignUpLoadingState _:
+              context.showLoading();
+              break;
+            case SignUpSuccessState _:
+              context.go(Routes.login);
+              break;
+            case SignUpErrorState _:
+              context.showSnackBar(state.message, isError: true);
+              break;
+            default:
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Gap(3),
+              Gap(3.sh),
+
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
                 ),
-
-                height: 50.sh,
+                height: 65.sh,
                 width: double.infinity,
 
                 child: Form(
@@ -65,8 +59,25 @@ class LoginFeatureScreen extends HookWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(16),
                     child: Column(
-                      spacing: 2,
+                      spacing: 2.sh,
                       children: [
+                        Column(
+                          spacing: 2.sp,
+                          crossAxisAlignment: .start,
+                          children: [
+                            Text("name", style: TextStyle(fontSize: 20)),
+                            TextFormField(
+                              controller: nameController,
+                              validator: Validators.validateRequired,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                filled: true,
+                                fillColor: Colors.transparent,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Gap(3),
                         Column(
                           spacing: 2.sp,
                           crossAxisAlignment: .start,
@@ -74,7 +85,7 @@ class LoginFeatureScreen extends HookWidget {
                             Text("Email", style: TextStyle(fontSize: 20)),
                             TextFormField(
                               controller: emailController,
-                              validator: Validators.validateRequired,
+                              validator: Validators.validateEmail,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 filled: true,
@@ -91,7 +102,8 @@ class LoginFeatureScreen extends HookWidget {
                             Text("Password", style: TextStyle(fontSize: 20)),
                             TextFormField(
                               controller: passwordController,
-                              validator: Validators.validateRequired,
+                              //!
+                              validator: Validators.validatePassword,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 filled: true,
@@ -113,14 +125,15 @@ class LoginFeatureScreen extends HookWidget {
                           ),
                           onPressed: () {
                             if (globalKey.currentState!.validate()) {
-                              cubit.getLoginMethod(
+                              cubit.getSignUpMethod(
+                                name: nameController.text,
                                 email: emailController.text,
                                 password: passwordController.text,
                               );
                             }
                           },
                           child: const Text(
-                            "Sign In",
+                            "Create Account",
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -128,10 +141,10 @@ class LoginFeatureScreen extends HookWidget {
                           ),
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: .start,
                           children: [
                             Text(
-                              "Don’t have an account? ",
+                              "Already a member? ",
                               style: TextStyle(
                                 color: AppColors.textSecondary,
                                 fontSize: 14,
@@ -139,7 +152,7 @@ class LoginFeatureScreen extends HookWidget {
                             ),
                             TextButton(
                               onPressed: () {
-                                context.pop(Routes.taskCreator);
+                                context.push(Routes.login);
                               },
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.zero,
@@ -147,7 +160,7 @@ class LoginFeatureScreen extends HookWidget {
                                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               ),
                               child: Text(
-                                "Sign up",
+                                "Sign in",
                                 style: TextStyle(
                                   color: AppColors.primary,
                                   fontWeight: FontWeight.bold,

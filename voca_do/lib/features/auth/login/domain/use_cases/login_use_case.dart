@@ -1,9 +1,8 @@
-import 'package:multiple_result/multiple_result.dart';
 import 'package:injectable/injectable.dart';
+import 'package:multiple_result/multiple_result.dart';
+import 'package:voca_do/core/constants/app_enums.dart';
 import 'package:voca_do/core/errors/failure.dart';
-import 'package:voca_do/features/auth/login/domain/entities/login_entity.dart';
 import 'package:voca_do/features/auth/login/domain/repositories/login_repository_domain.dart';
-
 
 @lazySingleton
 class LoginUseCase {
@@ -11,7 +10,10 @@ class LoginUseCase {
 
   LoginUseCase(this._repositoryData);
 
-   Future<Result<LoginEntity, Failure>> getLogin() async {
-    return _repositoryData.getLogin();
+  Future<Result<UserRole, Failure>> getLogin({
+    required String email,
+    required String password,
+  }) async {
+    return _repositoryData.getLogin(email: email, password: password);
   }
 }
