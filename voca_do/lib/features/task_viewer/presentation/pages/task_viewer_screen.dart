@@ -22,18 +22,20 @@ class _TaskViewerScreenState extends State<TaskViewerScreen> {
   }
 
   void _openTaskList(
-    BuildContext context, {
-    required String title,
-    required List<TaskViewerEntity> tasks,
-  }) {
-    context.push(
-      Routes.taskList,
-      extra: {
-        'title': title,
-        'tasks': tasks,
-      },
-    );
-  }
+  BuildContext context, {
+  required String title,
+  required List<TaskViewerEntity> tasks,
+}) {
+  debugPrint(' VIEW ALL: $title');
+
+  context.push(
+    Routes.taskList,
+    extra: {
+      'title': title,
+      'tasks': tasks,
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {

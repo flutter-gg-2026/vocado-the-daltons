@@ -54,11 +54,13 @@ class TaskHorizontalSection extends StatelessWidget {
                 ),
               ),
 
-            const Spacer(),
-            InkWell(
+        const Spacer(),
+
+GestureDetector(
+  behavior: HitTestBehavior.opaque,
   onTap: onViewAll,
   child: const Padding(
-    padding: EdgeInsets.all(8),
+    padding: EdgeInsets.all(12),
     child: Text(
       'View all',
       style: TextStyle(
@@ -125,6 +127,6 @@ class TaskHorizontalSection extends StatelessWidget {
       return 145;
     }
 
-    return 130; // new
+    return 130; 
   }
 }

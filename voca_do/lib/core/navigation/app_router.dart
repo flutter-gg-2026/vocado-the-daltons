@@ -36,8 +36,8 @@ GoRoute(
     final extra = state.extra as Map<String, dynamic>;
 
     return TaskListScreen(
-      title: extra['title'],
-      tasks: extra['tasks'],
+      title: extra['title'] as String,
+      tasks: extra['tasks'] as List<TaskViewerEntity>,
     );
   },
 ),
