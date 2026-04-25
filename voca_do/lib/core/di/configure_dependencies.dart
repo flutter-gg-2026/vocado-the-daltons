@@ -3,13 +3,11 @@ import 'package:voca_do/core/di/configure_dependencies.config.dart';
 import 'package:injectable/injectable.dart';
 import 'package:voca_do/features/auth/login/di/login_di.dart';
 import 'package:voca_do/features/task_viewer/di/task_viewer_di.dart';
-<<<<<<< HEAD
 import 'package:voca_do/features/admin_home_screen/di/admin_home_screen_di.dart';
 import 'package:voca_do/features/sub/audio_feature/di/audio_feature_di.dart';
 import 'package:voca_do/features/add_task_screen/di/add_task_screen_di.dart';
-=======
 import 'package:voca_do/features/auth/sign_up/di/sign_up_di.dart';
->>>>>>> main
+
 
 @InjectableInit(
   initializerName: 'init', 
@@ -23,11 +21,8 @@ Future<void> configureDependencies() async {
   getIt.init();
     configureLogin(getIt);
     configureTaskViewer(getIt);
-<<<<<<< HEAD
     configureAdminHomeScreen(getIt);
     configureAudioFeatureSub(getIt);
     configureAddTaskScreen(getIt);
-=======
     configureSignUp(getIt);
->>>>>>> main
 }
