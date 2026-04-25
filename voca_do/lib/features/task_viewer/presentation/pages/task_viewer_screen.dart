@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:voca_do/core/navigation/routers.dart';
 import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_state.dart';
@@ -17,6 +19,20 @@ class _TaskViewerScreenState extends State<TaskViewerScreen> {
   void initState() {
     super.initState();
     context.read<TaskViewerCubit>().getUserTasks();
+  }
+
+  void _openTaskList(
+    BuildContext context, {
+    required String title,
+    required List<TaskViewerEntity> tasks,
+  }) {
+    context.push(
+      Routes.taskList,
+      extra: {
+        'title': title,
+        'tasks': tasks,
+      },
+    );
   }
 
   @override
@@ -49,10 +65,11 @@ class _TaskViewerScreenState extends State<TaskViewerScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+               
                     const Center(
                       child: Text.rich(
                         TextSpan(
-                          text: 'Hello,',
+                          text: 'Hello, ',
                           children: [
                             TextSpan(
                               text: 'USER',
@@ -66,26 +83,44 @@ class _TaskViewerScreenState extends State<TaskViewerScreen> {
 
                     const SizedBox(height: 28),
 
+             
                     TaskHorizontalSection(
                       title: 'New',
                       tasks: newTasks,
                       type: TaskSectionType.newTask,
+                      onViewAll: () => _openTaskList(
+                        context,
+                        title: 'New',
+                        tasks: newTasks,
+                      ),
                     ),
 
                     const SizedBox(height: 24),
 
+            
                     TaskHorizontalSection(
                       title: 'Late',
                       tasks: lateTasks,
                       type: TaskSectionType.late,
+                      onViewAll: () => _openTaskList(
+                        context,
+                        title: 'Late',
+                        tasks: lateTasks,
+                      ),
                     ),
 
                     const SizedBox(height: 24),
 
+          
                     TaskHorizontalSection(
                       title: 'In Progress',
                       tasks: inProgressTasks,
                       type: TaskSectionType.inProgress,
+                      onViewAll: () => _openTaskList(
+                        context,
+                        title: 'In Progress',
+                        tasks: inProgressTasks,
+                      ),
                     ),
                   ],
                 ),

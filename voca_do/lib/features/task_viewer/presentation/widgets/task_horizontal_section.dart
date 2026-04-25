@@ -12,12 +12,14 @@ class TaskHorizontalSection extends StatelessWidget {
   final String title;
   final List<TaskViewerEntity> tasks;
   final TaskSectionType type;
+  final VoidCallback? onViewAll;
 
   const TaskHorizontalSection({
     super.key,
     required this.title,
     required this.tasks,
     required this.type,
+    this.onViewAll,
   });
 
   @override
@@ -36,6 +38,7 @@ class TaskHorizontalSection extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
+
             const SizedBox(width: 6),
             if (type != TaskSectionType.newTask)
               CircleAvatar(
@@ -50,20 +53,28 @@ class TaskHorizontalSection extends StatelessWidget {
                   ),
                 ),
               ),
+
             const Spacer(),
-            const Text(
-              'View all',
-              style: TextStyle(
-                fontSize: 12,
-                color: Colors.black87,
-              ),
-            ),
+            InkWell(
+  onTap: onViewAll,
+  child: const Padding(
+    padding: EdgeInsets.all(8),
+    child: Text(
+      'View all',
+      style: TextStyle(
+        fontSize: 12,
+        color: Colors.black87,
+      ),
+    ),
+  ),
+),
           ],
         ),
+
         const SizedBox(height: 12),
         if (tasks.isEmpty)
           Container(
-            height: 90,
+            height: 100,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -76,7 +87,7 @@ class TaskHorizontalSection extends StatelessWidget {
           )
         else
           SizedBox(
-    height: type == TaskSectionType.inProgress ? 95 : 145,
+            height: _getHeight(),
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: tasks.length,
@@ -95,7 +106,7 @@ class TaskHorizontalSection extends StatelessWidget {
 
   Color _getBadgeColor() {
     if (type == TaskSectionType.late) {
-      return const Color(0xffF26D6D);
+      return const Color(0xffF26D6D); 
     }
 
     if (type == TaskSectionType.inProgress) {
@@ -103,5 +114,17 @@ class TaskHorizontalSection extends StatelessWidget {
     }
 
     return Colors.transparent;
+  }
+
+  double _getHeight() {
+    if (type == TaskSectionType.inProgress) {
+      return 95;
+    }
+
+    if (type == TaskSectionType.late) {
+      return 145;
+    }
+
+    return 130; // new
   }
 }

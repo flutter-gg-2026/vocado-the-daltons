@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:voca_do/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:voca_do/features/auth/login/presentation/pages/login_feature_screen.dart';
 import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
+import 'package:voca_do/features/task_viewer/presentation/pages/task_list_screen.dart';
 import 'package:voca_do/features/task_viewer/presentation/pages/task_viewer_screen.dart';
 
 import 'routers.dart';
@@ -28,6 +29,18 @@ class AppRouter {
         }, // SplashScreen
       ),
 
+
+GoRoute(
+  path: Routes.taskList,
+  builder: (context, state) {
+    final extra = state.extra as Map<String, dynamic>;
+
+    return TaskListScreen(
+      title: extra['title'],
+      tasks: extra['tasks'],
+    );
+  },
+),
       GoRoute(
         path: Routes.login,
         builder: (context, state) => BlocProvider(
