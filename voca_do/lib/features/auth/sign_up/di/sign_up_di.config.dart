@@ -12,30 +12,30 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
-import 'package:voca_do/features/auth/login/data/datasources/login_remote_data_source.dart'
-    as _i326;
-import 'package:voca_do/features/auth/login/data/repositories/login_repository_data.dart'
-    as _i707;
-import 'package:voca_do/features/auth/login/domain/repositories/login_repository_domain.dart'
-    as _i262;
-import 'package:voca_do/features/auth/login/domain/use_cases/login_use_case.dart'
-    as _i1023;
+import 'package:voca_do/features/auth/sign_up/data/datasources/sign_up_remote_data_source.dart'
+    as _i602;
+import 'package:voca_do/features/auth/sign_up/data/repositories/sign_up_repository_data.dart'
+    as _i409;
+import 'package:voca_do/features/auth/sign_up/domain/repositories/sign_up_repository_domain.dart'
+    as _i456;
+import 'package:voca_do/features/auth/sign_up/domain/use_cases/sign_up_use_case.dart'
+    as _i943;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
-  _i174.GetIt initLogin({
+  _i174.GetIt initSignUp({
     String? environment,
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.lazySingleton<_i326.BaseLoginRemoteDataSource>(
-      () => _i326.LoginRemoteDataSource(gh<_i454.SupabaseClient>()),
+    gh.lazySingleton<_i602.BaseSignUpRemoteDataSource>(
+      () => _i602.SignUpRemoteDataSource(gh<_i454.SupabaseClient>()),
     );
-    gh.lazySingleton<_i262.LoginRepositoryDomain>(
-      () => _i707.LoginRepositoryData(gh<_i326.BaseLoginRemoteDataSource>()),
+    gh.lazySingleton<_i456.SignUpRepositoryDomain>(
+      () => _i409.SignUpRepositoryData(gh<_i602.BaseSignUpRemoteDataSource>()),
     );
-    gh.lazySingleton<_i1023.LoginUseCase>(
-      () => _i1023.LoginUseCase(gh<_i262.LoginRepositoryDomain>()),
+    gh.lazySingleton<_i943.SignUpUseCase>(
+      () => _i943.SignUpUseCase(gh<_i456.SignUpRepositoryDomain>()),
     );
     return this;
   }
