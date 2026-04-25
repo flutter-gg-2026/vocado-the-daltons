@@ -1,15 +1,18 @@
-import 'package:bottom_bar/bottom_bar.dart';
 import 'package:crystal_navigation_bar/crystal_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:voca_do/core/constants/app_colors.dart';
-import 'package:voca_do/features/task_creator/sub/add_task_screen/presentation/cubit/add_task_screen_cubit.dart';
-import 'package:voca_do/features/task_creator/sub/add_task_screen/presentation/pages/add_task_screen_feature_screen.dart';
-import 'package:voca_do/features/task_creator/sub/admin_home_screen/presentation/cubit/admin_home_screen_cubit.dart';
-import 'package:voca_do/features/task_creator/sub/admin_home_screen/presentation/pages/admin_home_screen_feature_screen.dart';
-
-enum _SelectedTab { home, favorite, add, search, person }
+import 'package:voca_do/core/constants/app_enums.dart';
+import 'package:voca_do/features/task_creator/home/sub/add_task_screen/presentation/cubit/add_task_screen_cubit.dart';
+import 'package:voca_do/features/task_creator/home/sub/add_task_screen/presentation/pages/add_task_screen_feature_screen.dart';
+import 'package:voca_do/features/task_creator/home/sub/admin_home_screen/presentation/pages/admin_home_screen_feature_screen.dart';
+import 'package:voca_do/features/task_creator/profile/presentation/cubit/profile_cubit.dart';
+import 'package:voca_do/features/task_creator/profile/presentation/pages/profile_feature_screen.dart';
+import 'package:voca_do/features/task_creator/tasks_board/presentation/cubit/tasks_board_cubit.dart';
+import 'package:voca_do/features/task_creator/tasks_board/presentation/pages/tasks_board_feature_screen.dart';
+import 'package:voca_do/features/task_creator/team/presentation/cubit/team_cubit.dart';
+import 'package:voca_do/features/task_creator/team/presentation/pages/team_feature_screen.dart';
 
 class TaskCreatorFeatureScreen extends StatefulWidget {
   const TaskCreatorFeatureScreen({super.key});
@@ -20,22 +23,25 @@ class TaskCreatorFeatureScreen extends StatefulWidget {
 }
 
 class _TaskCreatorFeatureScreenState extends State<TaskCreatorFeatureScreen> {
-  _SelectedTab _selectedTab = _SelectedTab.home;
+  SelectedTab _selectedTab = SelectedTab.home;
 
   final List<Widget> _pages = [
     BlocProvider(
       create: (context) => AddTaskScreenCubit(GetIt.I.get()),
       child: const AddTaskScreenFeatureScreen(),
     ),
-   BlocProvider(
-      create: (context) => AdminHomeScreenCubit(GetIt.I.get()),
-      child: const AdminHomeScreenFeatureScreen(),
-    ), BlocProvider(
-      create: (context) => AdminHomeScreenCubit(GetIt.I.get()),
-      child: const AdminHomeScreenFeatureScreen(),
-    ), BlocProvider(
-      create: (context) => AdminHomeScreenCubit(GetIt.I.get()),
-      child: const AdminHomeScreenFeatureScreen(),
+    BlocProvider(
+      create: (context) => TeamCubit(GetIt.I.get()),
+      child: const TeamFeatureScreen(),
+    ),
+    BlocProvider(
+      create: (context) => TasksBoardCubit(GetIt.I.get()),
+      child: const TasksBoardFeatureScreen(),
+    ),
+
+    BlocProvider(
+      create: (context) => ProfileCubit(GetIt.I.get()),
+      child: const ProfileFeatureScreen(),
     ),
   ];
 
@@ -45,12 +51,12 @@ class _TaskCreatorFeatureScreenState extends State<TaskCreatorFeatureScreen> {
       extendBody: true,
 
       body: IndexedStack(
-        index: _SelectedTab.values.indexOf(_selectedTab),
+        index: SelectedTab.values.indexOf(_selectedTab),
         children: _pages,
       ),
 
       bottomNavigationBar: CrystalNavigationBar(
-        currentIndex: _SelectedTab.values.indexOf(_selectedTab),
+        currentIndex: SelectedTab.values.indexOf(_selectedTab),
         height: 10,
         unselectedItemColor: Colors.white70,
         borderWidth: 2,
@@ -58,24 +64,24 @@ class _TaskCreatorFeatureScreenState extends State<TaskCreatorFeatureScreen> {
         backgroundColor: Colors.black,
         onTap: (i) {
           setState(() {
-            _selectedTab = _SelectedTab.values[i];
+            _selectedTab = SelectedTab.values[i];
           });
         },
         items: [
           CrystalNavigationBarItem(
             icon: Icons.home,
             unselectedIcon: Icons.home_outlined,
-            selectedColor: AppColors.divider,
+            selectedColor: AppColors.error,
           ),
           CrystalNavigationBarItem(
             icon: Icons.group,
             unselectedIcon: Icons.group_outlined,
-            selectedColor: Colors.red,
+            selectedColor: AppColors.primary,
           ),
           CrystalNavigationBarItem(
-            icon:Icons.checklist,
+            icon: Icons.checklist,
             unselectedIcon: Icons.checklist,
-            selectedColor: AppColors.primary,
+            selectedColor: AppColors.info,
           ),
           CrystalNavigationBarItem(
             icon: Icons.person,

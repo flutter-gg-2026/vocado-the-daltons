@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
 
 abstract class TaskViewerState extends Equatable {
   const TaskViewerState();
@@ -7,13 +8,24 @@ abstract class TaskViewerState extends Equatable {
   List<Object?> get props => [];
 }
 
-class TaskViewerInitialState extends TaskViewerState {}
-class TaskViewerSuccessState extends TaskViewerState {}
+class TaskViewerInitial extends TaskViewerState {}
 
-class TaskViewerErrorState extends TaskViewerState {
+class TaskViewerLoading extends TaskViewerState {}
+
+class TaskViewerSuccess extends TaskViewerState {
+  final List<TaskViewerEntity> tasks;
+
+  const TaskViewerSuccess(this.tasks);
+
+  @override
+  List<Object?> get props => [tasks];
+}
+
+class TaskViewerError extends TaskViewerState {
   final String message;
-  const TaskViewerErrorState({required this.message});
+
+  const TaskViewerError(this.message);
+
   @override
   List<Object?> get props => [message];
 }
-

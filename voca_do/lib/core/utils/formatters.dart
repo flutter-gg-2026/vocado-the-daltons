@@ -3,6 +3,10 @@ import 'package:intl/intl.dart';
 
 class Formatters {
   Formatters._();
+  
+  static String formatFullDate(DateTime date) {
+    return DateFormat('EEEE, d MMMM yyyy').format(date);
+  }
 
   static String formatCurrency(double amount, {String symbol = '\$'}) {
     return '$symbol${amount.toStringAsFixed(2)}';

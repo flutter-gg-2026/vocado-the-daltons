@@ -7,6 +7,6 @@ import 'task_creator_di.config.dart';
    // Optional: specify the directory to scan for injectable annotations
   generateForDir: ['lib/features/task_creator'],
 )
-void configureTaskCreator(GetIt getIt) {
+void configureTeams(GetIt getIt) {
   getIt.initTaskCreator();
 }

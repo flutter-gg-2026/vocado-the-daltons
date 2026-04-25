@@ -2,6 +2,8 @@ enum UserRole { admin, user }
 
 enum TaskStatus { created, inProgress, late, completed }
 
+enum SelectedTab { home, team, taskBoard, profile }
+
 enum LoadingState { initial, loading, success, error }
 
 enum NetworkStatus { connected, disconnected, unknown }

@@ -1,0 +1,24 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:voca_do/features/task_creator/profile/domain/entities/profile_entity.dart';
+part 'profile_model.freezed.dart';
+part 'profile_model.g.dart';
+
+@freezed
+abstract class ProfileModel with _$ProfileModel {
+  @JsonSerializable(fieldRename: .snake)
+  const factory ProfileModel({
+    required String name,
+    required String email,
+    required String role,
+    required DateTime createdAt,
+  }) = _ProfileModel;
+
+  factory ProfileModel.fromJson(Map<String, Object?> json) =>
+      _$ProfileModelFromJson(json);
+}
+
+extension ProfileModelMapper on ProfileModel {
+  ProfileEntity toEntity() {
+    return ProfileEntity(name: name, email: email, role: role, createdAt: createdAt);
+  }
+}
