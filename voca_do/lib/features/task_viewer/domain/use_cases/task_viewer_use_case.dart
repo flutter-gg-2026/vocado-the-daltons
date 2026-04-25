@@ -13,8 +13,7 @@ class TaskViewerUseCase {
 
  
   Future<Result<List<TaskViewerEntity>, Failure>> call(
-    String assigneeId,
   )async {
-    return _repositoryData.getTaskViewer(assigneeId);
+    return _repositoryData.getUserTasks();
   }
 }

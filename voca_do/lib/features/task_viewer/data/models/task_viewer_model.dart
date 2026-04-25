@@ -11,6 +11,8 @@ abstract class TaskViewerModel with _$TaskViewerModel {
     @JsonKey(name: 'assignee_id') required String assigneeId,
     @JsonKey(name: 'due_date') required String dueDate,
     required String status,
+    @JsonKey(name: 'created_by') required String createdBy,
+    @JsonKey(name: 'created_at') required String createdAt,
   }) = _TaskViewerModel;
 
   factory TaskViewerModel.fromJson(Map<String, dynamic> json) =>
@@ -24,7 +26,7 @@ extension TaskViewerMapper on TaskViewerModel {
       title: title,
       assigneeId: assigneeId,
       dueDate: dueDate,
-      status: status,
+      status: status, createdBy: createdBy, createdAt: createdAt,
     );
   }
 }

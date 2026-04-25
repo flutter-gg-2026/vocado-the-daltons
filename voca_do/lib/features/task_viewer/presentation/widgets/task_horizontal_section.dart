@@ -23,21 +23,24 @@ class TaskHorizontalSection extends StatelessWidget {
           count: tasks.length.toString(),
         ),
         const SizedBox(height: 12),
-        SizedBox(
-          height: 150,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: tasks.length,
-            separatorBuilder: (context, index) {
-              return const SizedBox(width: 10);
-            },
-            itemBuilder: (context, index) {
-              return TaskCard(
-                task: tasks[index],
-              );
-            },
+
+        if (tasks.isEmpty)
+          const Text(
+            'No tasks',
+            style: TextStyle(color: Colors.grey),
+          )
+        else
+          SizedBox(
+            height: 140,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: tasks.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              itemBuilder: (context, index) {
+                return TaskCard(task: tasks[index]);
+              },
+            ),
           ),
-        ),
       ],
     );
   }

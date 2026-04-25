@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TaskViewerModel {
 
- String get id; String get title;@JsonKey(name: 'assignee_id') String get assigneeId;@JsonKey(name: 'due_date') String get dueDate; String get status;
+ String get id; String get title;@JsonKey(name: 'assignee_id') String get assigneeId;@JsonKey(name: 'due_date') String get dueDate; String get status;@JsonKey(name: 'created_by') String get createdBy;@JsonKey(name: 'created_at') String get createdAt;
 /// Create a copy of TaskViewerModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $TaskViewerModelCopyWith<TaskViewerModel> get copyWith => _$TaskViewerModelCopyW
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaskViewerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.assigneeId, assigneeId) || other.assigneeId == assigneeId)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaskViewerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.assigneeId, assigneeId) || other.assigneeId == assigneeId)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,assigneeId,dueDate,status);
+int get hashCode => Object.hash(runtimeType,id,title,assigneeId,dueDate,status,createdBy,createdAt);
 
 @override
 String toString() {
-  return 'TaskViewerModel(id: $id, title: $title, assigneeId: $assigneeId, dueDate: $dueDate, status: $status)';
+  return 'TaskViewerModel(id: $id, title: $title, assigneeId: $assigneeId, dueDate: $dueDate, status: $status, createdBy: $createdBy, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $TaskViewerModelCopyWith<$Res>  {
   factory $TaskViewerModelCopyWith(TaskViewerModel value, $Res Function(TaskViewerModel) _then) = _$TaskViewerModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String title,@JsonKey(name: 'assignee_id') String assigneeId,@JsonKey(name: 'due_date') String dueDate, String status
+ String id, String title,@JsonKey(name: 'assignee_id') String assigneeId,@JsonKey(name: 'due_date') String dueDate, String status,@JsonKey(name: 'created_by') String createdBy,@JsonKey(name: 'created_at') String createdAt
 });
 
 
@@ -65,13 +65,15 @@ class _$TaskViewerModelCopyWithImpl<$Res>
 
 /// Create a copy of TaskViewerModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? assigneeId = null,Object? dueDate = null,Object? status = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? assigneeId = null,Object? dueDate = null,Object? status = null,Object? createdBy = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,assigneeId: null == assigneeId ? _self.assigneeId : assigneeId // ignore: cast_nullable_to_non_nullable
 as String,dueDate: null == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
+as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -157,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title, @JsonKey(name: 'assignee_id')  String assigneeId, @JsonKey(name: 'due_date')  String dueDate,  String status)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String title, @JsonKey(name: 'assignee_id')  String assigneeId, @JsonKey(name: 'due_date')  String dueDate,  String status, @JsonKey(name: 'created_by')  String createdBy, @JsonKey(name: 'created_at')  String createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _TaskViewerModel() when $default != null:
-return $default(_that.id,_that.title,_that.assigneeId,_that.dueDate,_that.status);case _:
+return $default(_that.id,_that.title,_that.assigneeId,_that.dueDate,_that.status,_that.createdBy,_that.createdAt);case _:
   return orElse();
 
 }
@@ -178,10 +180,10 @@ return $default(_that.id,_that.title,_that.assigneeId,_that.dueDate,_that.status
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title, @JsonKey(name: 'assignee_id')  String assigneeId, @JsonKey(name: 'due_date')  String dueDate,  String status)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String title, @JsonKey(name: 'assignee_id')  String assigneeId, @JsonKey(name: 'due_date')  String dueDate,  String status, @JsonKey(name: 'created_by')  String createdBy, @JsonKey(name: 'created_at')  String createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _TaskViewerModel():
-return $default(_that.id,_that.title,_that.assigneeId,_that.dueDate,_that.status);case _:
+return $default(_that.id,_that.title,_that.assigneeId,_that.dueDate,_that.status,_that.createdBy,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +200,10 @@ return $default(_that.id,_that.title,_that.assigneeId,_that.dueDate,_that.status
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title, @JsonKey(name: 'assignee_id')  String assigneeId, @JsonKey(name: 'due_date')  String dueDate,  String status)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String title, @JsonKey(name: 'assignee_id')  String assigneeId, @JsonKey(name: 'due_date')  String dueDate,  String status, @JsonKey(name: 'created_by')  String createdBy, @JsonKey(name: 'created_at')  String createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _TaskViewerModel() when $default != null:
-return $default(_that.id,_that.title,_that.assigneeId,_that.dueDate,_that.status);case _:
+return $default(_that.id,_that.title,_that.assigneeId,_that.dueDate,_that.status,_that.createdBy,_that.createdAt);case _:
   return null;
 
 }
@@ -213,7 +215,7 @@ return $default(_that.id,_that.title,_that.assigneeId,_that.dueDate,_that.status
 @JsonSerializable()
 
 class _TaskViewerModel implements TaskViewerModel {
-  const _TaskViewerModel({required this.id, required this.title, @JsonKey(name: 'assignee_id') required this.assigneeId, @JsonKey(name: 'due_date') required this.dueDate, required this.status});
+  const _TaskViewerModel({required this.id, required this.title, @JsonKey(name: 'assignee_id') required this.assigneeId, @JsonKey(name: 'due_date') required this.dueDate, required this.status, @JsonKey(name: 'created_by') required this.createdBy, @JsonKey(name: 'created_at') required this.createdAt});
   factory _TaskViewerModel.fromJson(Map<String, dynamic> json) => _$TaskViewerModelFromJson(json);
 
 @override final  String id;
@@ -221,6 +223,8 @@ class _TaskViewerModel implements TaskViewerModel {
 @override@JsonKey(name: 'assignee_id') final  String assigneeId;
 @override@JsonKey(name: 'due_date') final  String dueDate;
 @override final  String status;
+@override@JsonKey(name: 'created_by') final  String createdBy;
+@override@JsonKey(name: 'created_at') final  String createdAt;
 
 /// Create a copy of TaskViewerModel
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaskViewerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.assigneeId, assigneeId) || other.assigneeId == assigneeId)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaskViewerModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.assigneeId, assigneeId) || other.assigneeId == assigneeId)&&(identical(other.dueDate, dueDate) || other.dueDate == dueDate)&&(identical(other.status, status) || other.status == status)&&(identical(other.createdBy, createdBy) || other.createdBy == createdBy)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,title,assigneeId,dueDate,status);
+int get hashCode => Object.hash(runtimeType,id,title,assigneeId,dueDate,status,createdBy,createdAt);
 
 @override
 String toString() {
-  return 'TaskViewerModel(id: $id, title: $title, assigneeId: $assigneeId, dueDate: $dueDate, status: $status)';
+  return 'TaskViewerModel(id: $id, title: $title, assigneeId: $assigneeId, dueDate: $dueDate, status: $status, createdBy: $createdBy, createdAt: $createdAt)';
 }
 
 
@@ -255,7 +259,7 @@ abstract mixin class _$TaskViewerModelCopyWith<$Res> implements $TaskViewerModel
   factory _$TaskViewerModelCopyWith(_TaskViewerModel value, $Res Function(_TaskViewerModel) _then) = __$TaskViewerModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String title,@JsonKey(name: 'assignee_id') String assigneeId,@JsonKey(name: 'due_date') String dueDate, String status
+ String id, String title,@JsonKey(name: 'assignee_id') String assigneeId,@JsonKey(name: 'due_date') String dueDate, String status,@JsonKey(name: 'created_by') String createdBy,@JsonKey(name: 'created_at') String createdAt
 });
 
 
@@ -272,13 +276,15 @@ class __$TaskViewerModelCopyWithImpl<$Res>
 
 /// Create a copy of TaskViewerModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? assigneeId = null,Object? dueDate = null,Object? status = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? assigneeId = null,Object? dueDate = null,Object? status = null,Object? createdBy = null,Object? createdAt = null,}) {
   return _then(_TaskViewerModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,assigneeId: null == assigneeId ? _self.assigneeId : assigneeId // ignore: cast_nullable_to_non_nullable
 as String,dueDate: null == dueDate ? _self.dueDate : dueDate // ignore: cast_nullable_to_non_nullable
 as String,status: null == status ? _self.status : status // ignore: cast_nullable_to_non_nullable
+as String,createdBy: null == createdBy ? _self.createdBy : createdBy // ignore: cast_nullable_to_non_nullable
+as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

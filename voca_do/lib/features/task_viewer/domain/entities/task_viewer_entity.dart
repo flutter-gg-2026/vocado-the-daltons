@@ -6,6 +6,8 @@ class TaskViewerEntity extends Equatable {
   final String assigneeId;
   final String dueDate;
   final String status;
+  final String createdBy;
+  final String createdAt;
 
   const TaskViewerEntity({
     required this.id,
@@ -13,6 +15,8 @@ class TaskViewerEntity extends Equatable {
     required this.assigneeId,
     required this.dueDate,
     required this.status,
+    required this.createdBy,
+    required this.createdAt,
   });
 
   @override
