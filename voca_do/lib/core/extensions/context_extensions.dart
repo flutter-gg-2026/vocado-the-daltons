@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:voca_do/core/widgets/loading_widget.dart';
+import 'package:voca_do/features/auth/sub/logout/presentation/cubit/logout_cubit.dart';
 
 extension ContextExtensions on BuildContext {
   // Snackbar
@@ -19,6 +20,43 @@ extension ContextExtensions on BuildContext {
 
   void hideLoading() {
     LoadingWidgetOverlay().hide();
+  }
+
+  void showLogoutDialog(BuildContext context, LogoutCubit cubit) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: const Color(0xFF161B33),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text(
+          "Sign Out",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+        content: const Text(
+          "Are you sure you want to leave? Your habits are waiting for you!",
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.redAccent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            onPressed: () {
+              Navigator.pop(dialogContext);
+              cubit.getLogoutMethod();
+            },
+            child: const Text("Logout", style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
   }
 
   void showBottomSheet({required Widget widget, double? height, Color? color}) {
