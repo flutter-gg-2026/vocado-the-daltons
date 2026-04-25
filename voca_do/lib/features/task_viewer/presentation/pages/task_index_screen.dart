@@ -53,9 +53,9 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
                 .where((task) => task.status.toLowerCase() == 'new')
                 .toList();
 
-            final lateTasks = state.tasks
-                .where((task) => task.status.toLowerCase() == 'late')
-                .toList();
+           final lateTasks = state.tasks
+    .where((task) => task.status.toLowerCase() == 'late')
+    .toList();
 
             final inProgressTasks = state.tasks
                 .where((task) => task.status.toLowerCase() == 'in_progress')

@@ -22,10 +22,7 @@ class TaskListScreen extends StatelessWidget {
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.all(10),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 18,
-            vertical: 28,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(18),
@@ -34,10 +31,12 @@ class TaskListScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               IconButton(
+                padding: EdgeInsets.zero,
+                alignment: Alignment.centerLeft,
                 onPressed: () => Navigator.pop(context),
                 icon: const Icon(Icons.arrow_back_ios),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 20),
               Text(
                 '$title Task need to done',
                 style: const TextStyle(
@@ -67,7 +66,7 @@ class TaskListScreen extends StatelessWidget {
   }
 }
 
-class TaskListCard extends StatelessWidget {
+class TaskListCard extends StatefulWidget {
   final TaskViewerEntity task;
   final String assigneeId;
 
@@ -78,9 +77,20 @@ class TaskListCard extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final isCompleted = task.status.toLowerCase() == 'completed';
+  State<TaskListCard> createState() => _TaskListCardState();
+}
 
+class _TaskListCardState extends State<TaskListCard> {
+  late bool isCompleted;
+
+  @override
+  void initState() {
+    super.initState();
+    isCompleted = widget.task.status.toLowerCase() == 'completed';
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -100,9 +110,9 @@ class TaskListCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  task.status == 'late' ? 'Task 02' : task.status,
-                  style: const TextStyle(
+                const Text(
+                  'Task 02',
+                  style: TextStyle(
                     color: Color(0xffFF5C6C),
                     fontSize: 12,
                     fontWeight: FontWeight.w700,
@@ -110,7 +120,7 @@ class TaskListCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  task.title,
+                  widget.task.title,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
@@ -121,14 +131,10 @@ class TaskListCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    const Icon(
-                      Icons.flag,
-                      size: 20,
-                      color: Colors.red,
-                    ),
+                    const Icon(Icons.flag, size: 20, color: Colors.red),
                     const SizedBox(width: 6),
                     Text(
-                      task.dueDate,
+                      widget.task.dueDate,
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -138,14 +144,19 @@ class TaskListCard extends StatelessWidget {
           ),
           Checkbox(
             value: isCompleted,
-            onChanged: isCompleted
-                ? null
-                : (value) {
-                    context.read<TaskViewerCubit>().completeTask(
-                          taskId: task.id,
-                          assigneeId: assigneeId,
-                        );
-                  },
+            activeColor: const Color(0xff1B4E77),
+            onChanged: (value) {
+              setState(() {
+                isCompleted = value ?? false;
+              });
+
+              if (isCompleted) {
+                context.read<TaskViewerCubit>().completeTask(
+                      taskId: widget.task.id,
+                      assigneeId: widget.assigneeId,
+                    );
+              }
+            },
           ),
         ],
       ),
