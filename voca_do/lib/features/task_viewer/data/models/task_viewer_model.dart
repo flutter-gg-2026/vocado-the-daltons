@@ -1,24 +1,45 @@
 import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-part 'task_viewer_model.freezed.dart';
-part 'task_viewer_model.g.dart';
 
-@freezed
-abstract class TaskViewerModel with _$TaskViewerModel {
-  const factory TaskViewerModel({
-    required int id,
-    required String firstName,
-    required String lastName,
-    
-  }) = _TaskViewerModel;
+class TaskViewerModel {
+  final String id;
+  final String title;
+  final String assigneeId;
+  final String dueDate;
+  final String status;
+  final String createdBy;
+  final String createdAt;
 
-  factory TaskViewerModel.fromJson(Map<String, Object?> json) => _$TaskViewerModelFromJson(json);
-}
+  TaskViewerModel({
+    required this.id,
+    required this.title,
+    required this.assigneeId,
+    required this.dueDate,
+    required this.status,
+    required this.createdBy,
+    required this.createdAt,
+  });
 
+  factory TaskViewerModel.fromJson(Map<String, dynamic> json) {
+    return TaskViewerModel(
+      id: json['id']?.toString() ?? '',
+      title: json['task']?.toString() ?? 'No title',
+      assigneeId: json['assignee_id']?.toString() ?? '',
+      dueDate: json['due_date']?.toString() ?? '',
+      status: json['status']?.toString() ?? 'new',
+      createdBy: json['created_by']?.toString() ?? '',
+      createdAt: json['created_at']?.toString() ?? '',
+    );
+  }
 
-
-extension TaskViewerModelMapper on TaskViewerModel {
   TaskViewerEntity toEntity() {
-    return TaskViewerEntity(id: id, firstName: firstName, lastName: lastName);
+    return TaskViewerEntity(
+      id: id,
+      title: title,
+      assigneeId: assigneeId,
+      dueDate: dueDate,
+      status: status,
+      createdBy: createdBy,
+      createdAt: createdAt,
+    );
   }
-  }
+}

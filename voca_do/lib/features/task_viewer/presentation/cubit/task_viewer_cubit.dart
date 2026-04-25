@@ -1,27 +1,50 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:voca_do/features/task_viewer/domain/use_cases/task_viewer_use_case.dart';
+import 'package:voca_do/features/task_viewer/domain/use_cases/update_task_status_use_case.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_state.dart';
 
+@injectable
 class TaskViewerCubit extends Cubit<TaskViewerState> {
-  final TaskViewerUseCase _taskViewerUseCase;
+  final GetUserTasksUseCase getUserTasksUseCase;
+  final UpdateTaskStatusUseCase updateTaskStatusUseCase;
 
-  TaskViewerCubit(this._taskViewerUseCase) : super(TaskViewerInitialState());
+  TaskViewerCubit(
+    this.getUserTasksUseCase,
+    this.updateTaskStatusUseCase,
+  ) : super(TaskViewerInitial());
 
-  Future<void> getTaskViewerMethod() async {
-    final result = await _taskViewerUseCase.getTaskViewer();
+  Future<void> getUserTasks(String assigneeId) async {
+    emit(TaskViewerLoading());
+
+    final result = await getUserTasksUseCase(assigneeId);
+
     result.when(
-      (success) {
-        //here is when success result
+      (tasks) {
+        emit(TaskViewerSuccess(tasks));
       },
-      (whenError) {
-       //here is when error result
+      (failure) {
+        emit(TaskViewerError(failure.message));
       },
     );
   }
 
-  @override
-  Future<void> close() {
-    //here is when close cubit
-    return super.close();
+  Future<void> completeTask({
+    required String taskId,
+    required String assigneeId,
+  }) async {
+    final result = await updateTaskStatusUseCase(
+      taskId: taskId,
+      status: 'completed',
+    );
+
+    result.when(
+      (_) {
+        getUserTasks(assigneeId);
+      },
+      (failure) {
+        emit(TaskViewerError(failure.message));
+      },
+    );
   }
 }
