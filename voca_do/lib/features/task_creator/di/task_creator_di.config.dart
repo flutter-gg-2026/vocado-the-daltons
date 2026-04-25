@@ -13,6 +13,7 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
+import 'package:voca_do/core/network/dio_client.dart' as _i848;
 import 'package:voca_do/core/services/audio_service.dart' as _i745;
 import 'package:voca_do/core/services/local_keys_service.dart' as _i302;
 import 'package:voca_do/features/task_creator/data/datasources/task_creator_remote_data_source.dart'
@@ -72,9 +73,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i554.BaseAdminHomeScreenRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i696.BaseAddTaskScreenRemoteDataSource>(
-      () => _i696.AddTaskScreenRemoteDataSource(gh<_i454.SupabaseClient>()),
-    );
     gh.lazySingleton<_i594.BaseAudioFeatureRemoteDataSource>(
       () => _i594.AudioFeatureRemoteDataSource(
         gh<_i454.SupabaseClient>(),
@@ -89,6 +87,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i97.AudioFeatureUseCase>(
       () => _i97.AudioFeatureUseCase(gh<_i764.AudioFeatureRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i696.BaseAddTaskScreenRemoteDataSource>(
+      () => _i696.AddTaskScreenRemoteDataSource(
+        gh<_i454.SupabaseClient>(),
+        gh<_i848.DioClient>(),
+      ),
     );
     gh.lazySingleton<_i140.TaskCreatorRepositoryDomain>(
       () => _i365.TaskCreatorRepositoryData(

@@ -5,23 +5,24 @@ import 'package:voca_do/features/task_creator/sub/add_task_screen/presentation/c
 class AddTaskScreenCubit extends Cubit<AddTaskScreenState> {
   final AddTaskScreenUseCase _addTaskScreenUseCase;
 
-  AddTaskScreenCubit(this._addTaskScreenUseCase) : super(AddTaskScreenInitialState());
+  AddTaskScreenCubit(this._addTaskScreenUseCase)
+    : super(AddTaskScreenInitialState());
 
-  Future<void> getAddTaskScreenMethod() async {
-    final result = await _addTaskScreenUseCase.getAddTaskScreen();
+  // ============================================================
+  // ============================================================
+
+  Future<void> getAddTaskMethod({required String task}) async {
+    emit(AddTaskScreenLoadingState());
+
+    final result = await _addTaskScreenUseCase.getAddTask(task);
+
     result.when(
       (success) {
-        //here is when success result
+        emit(AddTaskScreenSuccessState(taskEntity: success));
       },
       (whenError) {
-       //here is when error result
+        emit(AddTaskScreenErrorState(message: whenError.message));
       },
     );
-  }
-
-  @override
-  Future<void> close() {
-    //here is when close cubit
-    return super.close();
   }
 }

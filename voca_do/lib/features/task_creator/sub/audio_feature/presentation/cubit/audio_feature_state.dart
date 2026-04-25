@@ -7,9 +7,15 @@ abstract class AudioFeatureState extends Equatable {
   List<Object?> get props => [];
 }
 
+// ===============================================================
+
 class AudioFeatureInitialState extends AudioFeatureState {}
 
+// ===============================================================
+
 class AudioFeatureSuccessState extends AudioFeatureState {}
+
+// ===============================================================
 
 class AudioFeatureErrorState extends AudioFeatureState {
   final String message;
@@ -17,6 +23,8 @@ class AudioFeatureErrorState extends AudioFeatureState {
   @override
   List<Object?> get props => [message];
 }
+
+// ===============================================================
 
 class AudioFeatureRecordingState extends AudioFeatureState {
   final bool isRecording;
@@ -28,9 +36,15 @@ class AudioFeatureRecordingState extends AudioFeatureState {
   List<Object?> get props => [isRecording, path];
 }
 
+// ===============================================================
+
 class AudioFeatureTranscribingState extends AudioFeatureState {}
+
+// ===============================================================
 
 class AudioFeatureTranscriptionSuccessState extends AudioFeatureState {
   final String text;
   const AudioFeatureTranscriptionSuccessState(this.text);
 }
+
+// ===============================================================
