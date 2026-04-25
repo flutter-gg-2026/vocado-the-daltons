@@ -4,11 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:voca_do/features/auth/login/di/login_di.dart';
 import 'package:voca_do/features/auth/sub/logout/di/logout_di.dart';
 import 'package:voca_do/features/task_viewer/di/task_viewer_di.dart';
-import 'package:voca_do/features/task_creator/home/sub/admin_home_screen/di/admin_home_screen_di.dart';
-import 'package:voca_do/features/task_creator/home/sub/audio_feature/di/audio_feature_di.dart';
-import 'package:voca_do/features/task_creator/home/sub/add_task_screen/di/add_task_screen_di.dart';
 import 'package:voca_do/features/auth/sign_up/di/sign_up_di.dart';
-// import 'package:voca_do/features/task_creator/di/task_creator_di.dart';
 import 'package:voca_do/features/task_creator/profile/di/profile_di.dart';
 import 'package:voca_do/features/task_creator/tasks_board/di/tasks_board_di.dart';
 import 'package:voca_do/features/task_creator/team/di/team_di.dart';
@@ -32,7 +28,6 @@ Future<void> configureDependencies() async {
   configureProfile(getIt);
   configureTasksBoard(getIt);
   configureTeam(getIt);
-  // configureTeams(getIt);
   configureHome(getIt);
   configureLogout(getIt);
 }
