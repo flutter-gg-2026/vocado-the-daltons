@@ -9,4 +9,10 @@ abstract class Env {
 
   @EnviedField(varName: 'key_supabase')
   static final String keySupabase = _Env.keySupabase;
+
+  @EnviedField(varName: 'gemini_api_key')
+  static final String geminiApiKey = _Env.geminiApiKey;
+
+  @EnviedField(varName: 'gladia_api_key')
+  static final String gladiaApiKey = _Env.gladiaApiKey;
 }

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide MultipartFile;
+import 'package:voca_do/core/config/env/env.dart';
 import 'package:voca_do/core/services/audio_service.dart';
 import 'package:voca_do/features/task_creator/sub/audio_feature/data/models/audio_feature_model.dart';
 import 'package:voca_do/core/errors/network_exceptions.dart';
@@ -55,7 +56,7 @@ class AudioFeatureRemoteDataSource implements BaseAudioFeatureRemoteDataSource {
   Future<String> transcribeAudio(String filePath) async {
     try {
       // Headers are extra information sent with an HTTP request
-      final headers = {'x-gladia-key': 'b56e5deb-35b8-4fc0-9e83-cfa9e069a755'};
+      final headers = {'x-gladia-key': Env.gladiaApiKey};
 
       // ======================
       // ======================
