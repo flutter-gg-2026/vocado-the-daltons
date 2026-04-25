@@ -9,6 +9,8 @@ environment:
 dependencies:
   animate_do: ^5.1.0
   bloc: ^9.2.0
+  bottom_bar: ^2.0.5
+  crystal_navigation_bar: ^1.1.0
   cupertino_icons: ^1.0.9
   # device_info_plus: ^12.4.0
   dio: ^5.9.2
