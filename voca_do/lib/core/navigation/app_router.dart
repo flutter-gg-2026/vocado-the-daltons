@@ -2,10 +2,12 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:voca_do/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:voca_do/features/auth/login/presentation/pages/login_feature_screen.dart';
+import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
+import 'package:voca_do/features/task_viewer/presentation/widgets/task_details_screen.dart';
 import 'routers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:voca_do/features/task_viewer/presentation/pages/task_viewer_feature_screen.dart';
+import 'package:voca_do/features/task_viewer/presentation/pages/task_viewer_screen.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 import 'package:voca_do/features/admin_home_screen/presentation/pages/admin_home_screen_feature_screen.dart';
 import 'package:voca_do/features/admin_home_screen/presentation/cubit/admin_home_screen_cubit.dart';
@@ -15,7 +17,7 @@ import 'package:voca_do/features/add_task_screen/presentation/cubit/add_task_scr
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.adminHomeScreen,
+    initialLocation: Routes.taskViewer,
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -55,6 +57,16 @@ class AppRouter {
           child: const AddTaskScreenFeatureScreen(),
         ),
   ),
+
+
+  GoRoute(
+  path: Routes.taskDetails,
+  builder: (context, state) {
+    final task = state.extra as TaskViewerEntity;
+
+    return TaskDetailsScreen(task: task);
+  },
+),
 ],
 
     errorBuilder: (context, state) =>
