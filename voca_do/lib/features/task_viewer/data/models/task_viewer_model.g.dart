@@ -6,8 +6,8 @@ part of 'task_viewer_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_TaskViewerModel _$TaskViewerModelFromJson(Map<String, dynamic> json) =>
-    _TaskViewerModel(
+TaskViewerModel _$TaskViewerModelFromJson(Map<String, dynamic> json) =>
+    TaskViewerModel(
       id: json['id'] as String,
       title: json['title'] as String,
       assigneeId: json['assignee_id'] as String,
@@ -17,7 +17,7 @@ _TaskViewerModel _$TaskViewerModelFromJson(Map<String, dynamic> json) =>
       createdAt: json['created_at'] as String,
     );
 
-Map<String, dynamic> _$TaskViewerModelToJson(_TaskViewerModel instance) =>
+Map<String, dynamic> _$TaskViewerModelToJson(TaskViewerModel instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,

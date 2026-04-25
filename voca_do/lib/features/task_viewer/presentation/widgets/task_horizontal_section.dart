@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
-import 'package:voca_do/features/task_viewer/presentation/widgets/task_card.dart';
+import 'package:voca_do/features/task_viewer/presentation/widgets/late_task_card.dart';
+import 'package:voca_do/features/task_viewer/presentation/widgets/new_task_card.dart';
+import 'package:voca_do/features/task_viewer/presentation/widgets/task_section_header.dart';
 
-enum TaskSectionType {
+enum TaskHorizontalSectionType {
   newTask,
   late,
-  inProgress,
 }
 
 class TaskHorizontalSection extends StatelessWidget {
   final String title;
+  final String? count;
+  final Color? countColor;
   final List<TaskViewerEntity> tasks;
-  final TaskSectionType type;
+  final TaskHorizontalSectionType type;
   final VoidCallback? onViewAll;
 
   const TaskHorizontalSection({
@@ -19,114 +22,40 @@ class TaskHorizontalSection extends StatelessWidget {
     required this.title,
     required this.tasks,
     required this.type,
+    this.count,
+    this.countColor,
     this.onViewAll,
   });
 
   @override
   Widget build(BuildContext context) {
-    final badgeColor = _getBadgeColor();
-
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              '${tasks.length} $title',
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-
-            const SizedBox(width: 6),
-            if (type != TaskSectionType.newTask)
-              CircleAvatar(
-                radius: 13,
-                backgroundColor: badgeColor,
-                child: Text(
-                  tasks.length.toString(),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-
-        const Spacer(),
-
-GestureDetector(
-  behavior: HitTestBehavior.opaque,
-  onTap: onViewAll,
-  child: const Padding(
-    padding: EdgeInsets.all(12),
-    child: Text(
-      'View all',
-      style: TextStyle(
-        fontSize: 12,
-        color: Colors.black87,
-      ),
-    ),
-  ),
-),
-          ],
+        TaskSectionHeader(
+          title: title,
+          count: count,
+          countColor: countColor,
+          onViewAll: onViewAll,
         ),
-
         const SizedBox(height: 12),
-        if (tasks.isEmpty)
-          Container(
-            height: 100,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: const Text(
-              'No tasks',
-              style: TextStyle(color: Colors.grey),
-            ),
-          )
-        else
-          SizedBox(
-            height: _getHeight(),
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: tasks.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 10),
-              itemBuilder: (context, index) {
-                return TaskCard(
-                  task: tasks[index],
-                  type: type,
-                );
-              },
-            ),
+        SizedBox(
+          height: type == TaskHorizontalSectionType.newTask ? 150 : 170,
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: tasks.length,
+            separatorBuilder: (context, index) => const SizedBox(width: 12),
+            itemBuilder: (context, index) {
+              final task = tasks[index];
+
+              if (type == TaskHorizontalSectionType.newTask) {
+                return NewTaskCard(task: task);
+              }
+
+              return LateTaskCard(task: task);
+            },
           ),
+        ),
       ],
     );
-  }
-
-  Color _getBadgeColor() {
-    if (type == TaskSectionType.late) {
-      return const Color(0xffF26D6D); 
-    }
-
-    if (type == TaskSectionType.inProgress) {
-      return const Color(0xffF3DE73);
-    }
-
-    return Colors.transparent;
-  }
-
-  double _getHeight() {
-    if (type == TaskSectionType.inProgress) {
-      return 95;
-    }
-
-    if (type == TaskSectionType.late) {
-      return 145;
-    }
-
-    return 130; 
   }
 }

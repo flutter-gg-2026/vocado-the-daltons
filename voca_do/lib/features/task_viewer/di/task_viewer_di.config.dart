@@ -30,19 +30,19 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
-    gh.lazySingleton<_i137.BaseTaskViewerRemoteDataSource>(
-      () => _i137.TaskViewerRemoteDataSource(gh<_i454.SupabaseClient>()),
+    gh.lazySingleton<_i137.TaskViewerRemoteDataSource>(
+      () => _i137.TaskViewerRemoteDataSourceImpl(gh<_i454.SupabaseClient>()),
     );
-    gh.lazySingleton<_i778.TaskViewerRepositoryDomain>(
-      () => _i209.TaskViewerRepositoryData(
-        gh<_i137.BaseTaskViewerRemoteDataSource>(),
+    gh.lazySingleton<_i778.TaskViewerRepository>(
+      () => _i209.TaskViewerRepositoryImpl(
+        gh<_i137.TaskViewerRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i562.TaskViewerUseCase>(
-      () => _i562.TaskViewerUseCase(gh<_i778.TaskViewerRepositoryDomain>()),
+    gh.lazySingleton<_i562.GetUserTasksUseCase>(
+      () => _i562.GetUserTasksUseCase(gh<_i778.TaskViewerRepository>()),
     );
     gh.factory<_i1045.TaskViewerCubit>(
-      () => _i1045.TaskViewerCubit(gh<_i562.TaskViewerUseCase>()),
+      () => _i1045.TaskViewerCubit(gh<_i562.GetUserTasksUseCase>()),
     );
     return this;
   }

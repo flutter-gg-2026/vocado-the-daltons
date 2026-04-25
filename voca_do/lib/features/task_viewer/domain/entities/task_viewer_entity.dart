@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class TaskViewerEntity extends Equatable {
   final String id;
-  final String title ;
+  final String title;
   final String assigneeId;
   final String dueDate;
   final String status;
@@ -20,5 +20,13 @@ class TaskViewerEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [title, assigneeId, dueDate, status, id];
+  List<Object?> get props => [
+        id,
+        title,
+        assigneeId,
+        dueDate,
+        status,
+        createdBy,
+        createdAt,
+      ];
 }

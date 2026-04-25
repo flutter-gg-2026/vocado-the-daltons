@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 class TaskSectionHeader extends StatelessWidget {
   final String title;
-  final String count;
+  final String? count;
+  final Color? countColor;
+  final VoidCallback? onViewAll;
 
   const TaskSectionHeader({
     super.key,
     required this.title,
-    required this.count,
+    this.count,
+    this.countColor,
+    this.onViewAll,
   });
 
   @override
@@ -20,27 +24,35 @@ class TaskSectionHeader extends StatelessWidget {
             Text(
               title,
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 15,
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const SizedBox(width: 8),
-            CircleAvatar(
-              radius: 14,
-              backgroundColor: Colors.black,
-              child: Text(
-                count,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
+            if (count != null) ...[
+              const SizedBox(width: 8),
+              CircleAvatar(
+                radius: 14,
+                backgroundColor: countColor ?? Colors.grey.shade200,
+                child: Text(
+                  count!,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
-        const Text(
-          'View all',
-          style: TextStyle(color: Colors.grey),
+        GestureDetector(
+          onTap: onViewAll,
+          child: const Text(
+            'View all',
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
       ],
     );

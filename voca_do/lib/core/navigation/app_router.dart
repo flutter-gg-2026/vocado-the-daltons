@@ -1,11 +1,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:voca_do/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:voca_do/features/auth/login/presentation/pages/login_feature_screen.dart';
 import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
 import 'package:voca_do/features/task_viewer/presentation/pages/task_list_screen.dart';
-import 'package:voca_do/features/task_viewer/presentation/pages/task_viewer_screen.dart';
+import 'package:voca_do/features/task_viewer/presentation/pages/task_index_screen.dart';
 
 import 'routers.dart';
 import 'package:get_it/get_it.dart';
@@ -55,11 +54,13 @@ GoRoute(
   builder: (context, state) {
     return BlocProvider(
       create: (context) => GetIt.I<TaskViewerCubit>(),
-      child: const TaskViewerScreen(),
+      child: const TaskIndexScreen(
+        assigneeId: '76ce4e3a-273d-4ace-afda-5af555288291',
+        userName: 'Leen',
+      ),
     );
   },
 ),
-
 
 
       GoRoute(
