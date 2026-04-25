@@ -23,4 +23,21 @@ class TaskViewerRepositoryImpl implements TaskViewerRepository {
       return Error(ServerFailure(error.toString()));
     }
   }
+
+  @override
+  Future<Result<void, Failure>> updateTaskStatus({
+    required String taskId,
+    required String status,
+  }) async {
+    try {
+      await remoteDataSource.updateTaskStatus(
+        taskId: taskId,
+        status: status,
+      );
+
+      return const Success(null);
+    } catch (error) {
+      return Error(ServerFailure(error.toString()));
+    }
+  }
 }

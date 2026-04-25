@@ -20,6 +20,8 @@ import 'package:voca_do/features/task_viewer/domain/repositories/task_viewer_rep
     as _i778;
 import 'package:voca_do/features/task_viewer/domain/use_cases/task_viewer_use_case.dart'
     as _i562;
+import 'package:voca_do/features/task_viewer/domain/use_cases/update_task_status_use_case.dart'
+    as _i660;
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart'
     as _i1045;
 
@@ -41,8 +43,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i562.GetUserTasksUseCase>(
       () => _i562.GetUserTasksUseCase(gh<_i778.TaskViewerRepository>()),
     );
+    gh.lazySingleton<_i660.UpdateTaskStatusUseCase>(
+      () => _i660.UpdateTaskStatusUseCase(gh<_i778.TaskViewerRepository>()),
+    );
     gh.factory<_i1045.TaskViewerCubit>(
-      () => _i1045.TaskViewerCubit(gh<_i562.GetUserTasksUseCase>()),
+      () => _i1045.TaskViewerCubit(
+        gh<_i562.GetUserTasksUseCase>(),
+        gh<_i660.UpdateTaskStatusUseCase>(),
+      ),
     );
     return this;
   }

@@ -28,15 +28,18 @@ class AppRouter {
         }, // SplashScreen
       ),
 
-
 GoRoute(
   path: Routes.taskList,
   builder: (context, state) {
     final extra = state.extra as Map<String, dynamic>;
 
-    return TaskListScreen(
-      title: extra['title'] as String,
-      tasks: extra['tasks'] as List<TaskViewerEntity>,
+    return BlocProvider.value(
+      value: GetIt.I<TaskViewerCubit>(),
+      child: TaskListScreen(
+        title: extra['title'] as String,
+        tasks: extra['tasks'] as List<TaskViewerEntity>,
+        assigneeId: extra['assigneeId'] as String,
+      ),
     );
   },
 ),

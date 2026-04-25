@@ -5,31 +5,31 @@ part 'task_viewer_model.g.dart';
 
 @JsonSerializable()
 class TaskViewerModel {
-  final String id;
-  final String title;
+  final String? id;
+  final String? title;
 
   @JsonKey(name: 'assignee_id')
-  final String assigneeId;
+  final String? assigneeId;
 
   @JsonKey(name: 'due_date')
-  final String dueDate;
+  final String? dueDate;
 
-  final String status;
+  final String? status;
 
   @JsonKey(name: 'created_by')
-  final String createdBy;
+  final String? createdBy;
 
   @JsonKey(name: 'created_at')
-  final String createdAt;
+  final String? createdAt;
 
   TaskViewerModel({
-    required this.id,
-    required this.title,
-    required this.assigneeId,
-    required this.dueDate,
-    required this.status,
-    required this.createdBy,
-    required this.createdAt,
+    this.id,
+    this.title,
+    this.assigneeId,
+    this.dueDate,
+    this.status,
+    this.createdBy,
+    this.createdAt,
   });
 
   factory TaskViewerModel.fromJson(Map<String, dynamic> json) =>
@@ -39,13 +39,13 @@ class TaskViewerModel {
 
   TaskViewerEntity toEntity() {
     return TaskViewerEntity(
-      id: id,
-      title: title,
-      assigneeId: assigneeId,
-      dueDate: dueDate,
-      status: status,
-      createdBy: createdBy,
-      createdAt: createdAt,
+      id: id ?? '',
+      title: title ?? 'No title',
+      assigneeId: assigneeId ?? '',
+      dueDate: dueDate ?? '',
+      status: status ?? 'new',
+      createdBy: createdBy ?? '',
+      createdAt: createdAt ?? '',
     );
   }
 }

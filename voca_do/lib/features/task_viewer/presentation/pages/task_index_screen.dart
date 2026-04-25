@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:voca_do/core/navigation/routers.dart';
 import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_state.dart';
@@ -51,11 +53,13 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
                 .where((task) => task.status.toLowerCase() == 'new')
                 .toList();
 
+            final lateTasks = state.tasks
+                .where((task) => task.status.toLowerCase() == 'late')
+                .toList();
+
             final inProgressTasks = state.tasks
                 .where((task) => task.status.toLowerCase() == 'in_progress')
                 .toList();
-
-            final lateTasks = state.tasks.where(_isLateTask).toList();
 
             return SafeArea(
               child: Container(
@@ -82,6 +86,12 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
                       title: '${newTasks.length} New tasks today',
                       tasks: newTasks,
                       type: TaskHorizontalSectionType.newTask,
+                      onViewAll: () {
+                        _goToTaskList(
+                          title: 'New Tasks',
+                          tasks: newTasks,
+                        );
+                      },
                     ),
                     const SizedBox(height: 26),
                     TaskHorizontalSection(
@@ -90,6 +100,12 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
                       countColor: const Color(0xffFF6F79),
                       tasks: lateTasks,
                       type: TaskHorizontalSectionType.late,
+                      onViewAll: () {
+                        _goToTaskList(
+                          title: 'Late',
+                          tasks: lateTasks,
+                        );
+                      },
                     ),
                     const SizedBox(height: 26),
                     TaskVerticalSection(
@@ -97,6 +113,12 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
                       count: inProgressTasks.length.toString(),
                       countColor: const Color(0xffFFE37A),
                       tasks: inProgressTasks,
+                      onViewAll: () {
+                        _goToTaskList(
+                          title: 'In Progress',
+                          tasks: inProgressTasks,
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -110,14 +132,17 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
     );
   }
 
-  bool _isLateTask(TaskViewerEntity task) {
-    final dueDate = DateTime.tryParse(task.dueDate);
-
-    if (dueDate == null) {
-      return false;
-    }
-
-    return dueDate.isBefore(DateTime.now()) &&
-        task.status.toLowerCase() != 'done';
+  void _goToTaskList({
+    required String title,
+    required List<TaskViewerEntity> tasks,
+  }) {
+    context.push(
+      Routes.taskList,
+      extra: {
+        'title': title,
+        'tasks': tasks,
+        'assigneeId': widget.assigneeId,
+      },
+    );
   }
 }

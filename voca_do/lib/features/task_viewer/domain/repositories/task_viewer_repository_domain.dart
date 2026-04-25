@@ -6,4 +6,9 @@ abstract class TaskViewerRepository {
   Future<Result<List<TaskViewerEntity>, Failure>> getUserTasks(
     String assigneeId,
   );
+
+  Future<Result<void, Failure>> updateTaskStatus({
+    required String taskId,
+    required String status,
+  });
 }

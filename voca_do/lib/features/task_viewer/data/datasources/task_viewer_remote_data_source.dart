@@ -4,6 +4,11 @@ import 'package:voca_do/features/task_viewer/data/models/task_viewer_model.dart'
 
 abstract class TaskViewerRemoteDataSource {
   Future<List<TaskViewerModel>> getUserTasks(String assigneeId);
+
+  Future<void> updateTaskStatus({
+    required String taskId,
+    required String status,
+  });
 }
 
 @LazySingleton(as: TaskViewerRemoteDataSource)
@@ -23,5 +28,16 @@ class TaskViewerRemoteDataSourceImpl implements TaskViewerRemoteDataSource {
     return response
         .map<TaskViewerModel>((json) => TaskViewerModel.fromJson(json))
         .toList();
+  }
+
+  @override
+  Future<void> updateTaskStatus({
+    required String taskId,
+    required String status,
+  }) async {
+    await supabaseClient
+        .from('tasks')
+        .update({'status': status})
+        .eq('id', taskId);
   }
 }
