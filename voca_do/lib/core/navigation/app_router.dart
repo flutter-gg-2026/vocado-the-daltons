@@ -2,32 +2,33 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:voca_do/features/task_creator/sub/add_task_screen/presentation/cubit/add_task_screen_cubit.dart';
 import 'package:voca_do/features/task_creator/sub/add_task_screen/presentation/pages/add_task_screen_feature_screen.dart';
-import 'package:voca_do/features/task_creator/sub/admin_home_screen/presentation/cubit/admin_home_screen_cubit.dart';
-import 'package:voca_do/features/task_creator/sub/admin_home_screen/presentation/pages/admin_home_screen_feature_screen.dart';
 import 'package:voca_do/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:voca_do/features/auth/login/presentation/pages/login_feature_screen.dart';
 import 'package:voca_do/features/auth/sign_up/presentation/cubit/sign_up_cubit.dart';
 import 'package:voca_do/features/auth/sign_up/presentation/pages/sign_up_feature_screen.dart';
+import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
+import 'package:voca_do/features/task_viewer/presentation/pages/task_index_screen.dart';
+import 'package:voca_do/features/task_viewer/presentation/pages/task_list_screen.dart';
 import 'routers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:voca_do/features/task_viewer/presentation/pages/task_viewer_feature_screen.dart';
+
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 import 'package:voca_do/features/task_creator/presentation/pages/task_creator_feature_screen.dart';
 import 'package:voca_do/features/task_creator/presentation/cubit/task_creator_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.taskCreator,
-
+   initialLocation: Routes.login ,
     routes: [
-      // GoRoute(
-      //   path: Routes.splash,
-      //   builder: (context, state) {
-      //     return Scaffold(body: Center(child: Text("splash screen")));
-      //   }, // SplashScreen
-      // ),
       GoRoute(
+        path: Routes.splash,
+        builder: (context, state) {
+          return Scaffold(body: Center(child: Text("splash screen")));
+        }, // SplashScreen
+      ),
+
+    GoRoute(
         path: Routes.login,
         builder: (context, state) => BlocProvider(
           create: (context) => LoginCubit(GetIt.I.get()),
@@ -42,21 +43,38 @@ class AppRouter {
         ),
       ),
 
-      // ],
-      // GoRoute(
-      //   path: Routes.taskCreator,
-      //   builder: (context, state) => BlocProvider(
-      //     create: (context) => TaskCreatorCubit(GetIt.I.get()),
-      //     child: const TaskCreatorFeatureScreen(),
-      //   ),
-      // ),
-      GoRoute(
-        path: Routes.taskViewer,
-        builder: (context, state) => BlocProvider(
-          create: (context) => TaskViewerCubit(GetIt.I.get()),
-          child: const TaskViewerFeatureScreen(),
-        ),
+
+GoRoute(
+  path: Routes.taskList,
+  builder: (context, state) {
+    final extra = state.extra as Map<String, dynamic>;
+
+    return BlocProvider.value(
+      value: GetIt.I<TaskViewerCubit>(),
+      child: TaskListScreen(
+        title: extra['title'] as String,
+        tasks: extra['tasks'] as List<TaskViewerEntity>,
+        assigneeId: extra['assigneeId'] as String,
       ),
+    );
+  },
+),
+  
+
+GoRoute(
+  path: Routes.taskViewer,
+  builder: (context, state) {
+    final extra = state.extra as Map<String, dynamic>;
+
+    return BlocProvider(
+      create: (context) => GetIt.I<TaskViewerCubit>(),
+      child: TaskIndexScreen(
+        assigneeId: extra['assigneeId'] as String,
+        userName: extra['userName'] as String,
+      ),
+    );
+  },
+),
 
       // GoRoute(
       //   path: Routes.adminHomeScreen,
@@ -81,7 +99,18 @@ class AppRouter {
           child: const TaskCreatorFeatureScreen(),
         ),
       ),
-    ],
+    
+  GoRoute(
+    path: Routes.addTaskScreen,
+    builder: (context, state) => BlocProvider(
+          create: (context) => AddTaskScreenCubit(GetIt.I.get()),
+          child: const AddTaskScreenFeatureScreen(),
+        ),
+  ),
+
+
+
+],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

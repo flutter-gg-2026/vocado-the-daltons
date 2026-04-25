@@ -3,8 +3,8 @@ class Routes {
   static const String splash = '/';
   static const String login = '/login';
   static const String taskCreator = '/taskCreator';
-  static const String taskViewer = '/taskViewer';
+  static const String taskViewer = '/task_index_screen';
   static const String adminHomeScreen = '/adminHomeScreen';
   static const String addTaskScreen = '/addTaskScreen';
-  static const String signUp = '/signUp';
+  static const String taskList = '/taskListScreen';
 }

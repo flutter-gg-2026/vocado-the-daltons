@@ -1,33 +1,43 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:voca_do/core/services/local_keys_service.dart';
 import 'package:voca_do/features/task_viewer/data/models/task_viewer_model.dart';
-import 'package:voca_do/core/errors/network_exceptions.dart';
 
+abstract class TaskViewerRemoteDataSource {
+  Future<List<TaskViewerModel>> getUserTasks(String assigneeId);
 
-abstract class BaseTaskViewerRemoteDataSource {
-  Future<TaskViewerModel> getTaskViewer();
+  Future<void> updateTaskStatus({
+    required String taskId,
+    required String status,
+  });
 }
 
+@LazySingleton(as: TaskViewerRemoteDataSource)
+class TaskViewerRemoteDataSourceImpl implements TaskViewerRemoteDataSource {
+  final SupabaseClient supabaseClient;
 
-@LazySingleton(as: BaseTaskViewerRemoteDataSource)
-class TaskViewerRemoteDataSource implements BaseTaskViewerRemoteDataSource {
- 
-  final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
-  
-  
+  TaskViewerRemoteDataSourceImpl(this.supabaseClient);
 
-   TaskViewerRemoteDataSource(this._localKeysService, this._supabase);
+  @override
+  Future<List<TaskViewerModel>> getUserTasks(String assigneeId) async {
+    final response = await supabaseClient
+        .from('tasks')
+        .select()
+        .eq('assignee_id', assigneeId)
+        .order('created_at', ascending: false);
 
+    return response
+        .map<TaskViewerModel>((json) => TaskViewerModel.fromJson(json))
+        .toList();
+  }
 
-
-    @override
-  Future<TaskViewerModel> getTaskViewer() async {
-    try {
-      return TaskViewerModel(id: 1, firstName: "Last Name", lastName: "First Name");
-    } catch (error) {
-     throw FailureExceptions.getException(error);
-    }
+  @override
+  Future<void> updateTaskStatus({
+    required String taskId,
+    required String status,
+  }) async {
+    await supabaseClient
+        .from('tasks')
+        .update({'status': status})
+        .eq('id', taskId);
   }
 }
