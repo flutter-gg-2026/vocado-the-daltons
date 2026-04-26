@@ -4,7 +4,6 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-
 import 'package:sizer/sizer.dart';
 import 'package:voca_do/core/extensions/context_extensions.dart';
 import 'package:voca_do/core/navigation/routers.dart';
@@ -41,7 +40,19 @@ class LogoutFeatureWidget extends StatelessWidget {
                 },
                 child: ElevatedButton(
                   onPressed: () => context.showLogoutDialog(context, cubit),
-
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFFEBEE),
+                    foregroundColor: const Color(0xFFD32F2F),
+                    elevation: 0,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      side: const BorderSide(
+                        color: Color(0xFFFFCDD2),
+                        width: 1,
+                      ),
+                    ),
+                  ),
                   child: Row(
                     children: [
                       Icon(Icons.logout_rounded, color: Colors.red, size: 30),

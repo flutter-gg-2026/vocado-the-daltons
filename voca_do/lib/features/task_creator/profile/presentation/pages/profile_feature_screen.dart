@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
-import 'package:voca_do/core/constants/app_colors.dart';
 import 'package:voca_do/core/extensions/context_extensions.dart';
 import 'package:voca_do/core/utils/formatters.dart';
 import 'package:voca_do/features/auth/sub/logout/presentation/pages/logout_feature_widget.dart';
@@ -11,20 +10,27 @@ import 'package:voca_do/features/task_creator/profile/presentation/cubit/profile
 
 class ProfileFeatureScreen extends StatelessWidget {
   const ProfileFeatureScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white, 
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.all(16),
-          child: const Text('Profile', style: TextStyle(fontSize: 36)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+            fontSize: 28, 
+            fontWeight: FontWeight.bold, 
+            color: Colors.black
+          ),
         ),
-
-        centerTitle: false,
+        centerTitle: true,
       ),
-      body: Center(
+      body: SingleChildScrollView( 
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.symmetric(horizontal: 6.w),
           child: Column(
             children: [
               BlocConsumer<ProfileCubit, ProfileState>(
@@ -34,7 +40,6 @@ class ProfileFeatureScreen extends StatelessWidget {
                   } else {
                     context.hideLoading();
                   }
-
                   if (state is ProfileErrorState) {
                     context.showSnackBar(state.message, isError: true);
                   }
@@ -43,55 +48,85 @@ class ProfileFeatureScreen extends StatelessWidget {
                   if (state is ProfileSuccessState) {
                     return Column(
                       children: [
-                        Gap(3.sh),
+                        Gap(4.h),
                         Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          height: 30.sh,
                           width: double.infinity,
-
-                          child: Padding(
-                            padding: const EdgeInsets.all(16),
-                            child: Column(
-                              spacing: 2.sh,
-                              children: [
-                                Text(
-                                  state.profile.name,
-                                  style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: .bold,
-                                    color: AppColors.textPrimary,
-                                  ),
+                          padding: EdgeInsets.all(25.sp),
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [Color(0xFFA583C0), Color(0xFF6A1B9A)],
+                            ),
+                            borderRadius: BorderRadius.circular(35),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF6A1B9A),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              CircleAvatar(
+                                radius: 40.sp,
+                                backgroundColor: Colors.white.withAlpha(40),
+                                child: Icon(
+                                  Icons.person,
+                                  size: 50.sp,
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  "Description :........",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: .bold,
-                                    color: AppColors.textPrimary,
-                                  ),
+                              ),
+                              Gap(2.h),
+                              Text(
+                                state.profile.name.toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  letterSpacing: 1.2,
                                 ),
-                                Gap(5.sh),
-                                Text(
+                              ),
+                              Gap(0.5.h),
+                              const Text(
+                                "Mobile Application Developer",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white70,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Gap(4.h),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withAlpha(50),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
                                   "Member since: ${Formatters.formatFullDate(state.profile.createdAt)}",
                                   style: const TextStyle(
-                                    color: AppColors.textSecondary,
-                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontSize: 12,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     );
                   }
-                  return const SizedBox.shrink();
+                  return SizedBox.shrink(); 
                 },
               ),
-              Gap(10.sh),
+              Gap(8.h),
+              const Divider(thickness: 3, color: Color(0xFFEEEEEE)),
+              Gap(2.h),
               LogoutFeatureWidget(),
+              Gap(4.h),
             ],
           ),
         ),

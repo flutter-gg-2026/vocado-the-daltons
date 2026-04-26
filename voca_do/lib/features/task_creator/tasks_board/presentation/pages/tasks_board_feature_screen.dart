@@ -26,8 +26,6 @@ class TasksBoardFeatureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _ = context.read<TasksBoardCubit>();
-
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(

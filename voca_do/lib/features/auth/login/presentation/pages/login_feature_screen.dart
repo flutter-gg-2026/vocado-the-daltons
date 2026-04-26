@@ -17,10 +17,8 @@ class LoginFeatureScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<LoginCubit>();
-    final emailController = useTextEditingController(
-      text: "ghayd25@outlook.sa",
-    );
-    final passwordController = useTextEditingController(text: "gh123456");
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
 
     final globalKey = GlobalKey<FormState>();
 

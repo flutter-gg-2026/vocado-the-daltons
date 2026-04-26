@@ -16,11 +16,9 @@ class SignUpFeatureScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<SignUpCubit>();
-    final nameController = useTextEditingController(text: "ghayda");
-    final emailController = useTextEditingController(
-      text: "ghayd25@outlook.sa",
-    );
-    final passwordController = useTextEditingController(text: "gh123456");
+    final nameController = useTextEditingController();
+    final emailController = useTextEditingController();
+    final passwordController = useTextEditingController();
     final globalKey = GlobalKey<FormState>();
 
     return Scaffold(
