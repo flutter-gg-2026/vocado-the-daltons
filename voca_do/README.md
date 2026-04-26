@@ -73,7 +73,7 @@ Instead of typing tasks manually, users simply speak — and the system intellig
 ### 🔐 Authentication
 
 <div align="center">
-  <img src="[assets/screenshots/login.png](https://github.com/user-attachments/assets/554cf816-04d8-4be4-920d-45c7298fe91a)" width="220"/>
+  <img src="https://github.com/user-attachments/assets/554cf816-04d8-4be4-920d-45c7298fe91a" width="220"/>
   <img src="https://github.com/user-attachments/assets/4d6e0315-1a72-4208-90f2-35637294ff57" width="220"/>
 </div>
 
