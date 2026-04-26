@@ -21,7 +21,7 @@ import 'package:voca_do/features/task_viewer/presentation/pages/task_list_screen
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.login,
+    initialLocation: Routes.taskViewer,
     routes: [
       GoRoute(
         path: Routes.login,
