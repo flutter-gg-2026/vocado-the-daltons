@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:voca_do/features/task_creator/team/domain/use_cases/team_use_case.dart';
 import 'package:voca_do/features/task_creator/team/presentation/cubit/team_state.dart';
 
+@injectable
 class TeamCubit extends Cubit<TeamState> {
   final TeamUseCase _teamUseCase;
 

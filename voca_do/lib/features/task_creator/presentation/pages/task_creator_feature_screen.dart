@@ -31,7 +31,7 @@ class _TaskCreatorFeatureScreenState extends State<TaskCreatorFeatureScreen> {
       child: const AddTaskScreenFeatureScreen(),
     ),
     BlocProvider(
-      create: (context) => TeamCubit(GetIt.I.get()),
+      create: (context) => GetIt.I.get<TeamCubit>()..getTeamMethod(),
       child: const TeamFeatureScreen(),
     ),
     BlocProvider(
@@ -40,7 +40,7 @@ class _TaskCreatorFeatureScreenState extends State<TaskCreatorFeatureScreen> {
     ),
 
     BlocProvider(
-      create: (context) => ProfileCubit(GetIt.I.get()),
+      create: (context) => GetIt.I.get<ProfileCubit>()..getProfileMethod(),
       child: const ProfileFeatureScreen(),
     ),
   ];

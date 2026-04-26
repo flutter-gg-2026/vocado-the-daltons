@@ -66,6 +66,8 @@ import 'package:voca_do/features/task_creator/team/domain/repositories/team_repo
     as _i549;
 import 'package:voca_do/features/task_creator/team/domain/use_cases/team_use_case.dart'
     as _i13;
+import 'package:voca_do/features/task_creator/team/presentation/cubit/team_cubit.dart'
+    as _i607;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -80,12 +82,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i454.SupabaseClient>(),
       ),
     );
-    gh.lazySingleton<_i415.BaseTeamRemoteDataSource>(
-      () => _i415.TeamRemoteDataSource(
-        gh<_i302.LocalKeysService>(),
-        gh<_i454.SupabaseClient>(),
-      ),
-    );
     gh.lazySingleton<_i217.BaseProfileRemoteDataSource>(
       () => _i217.ProfileRemoteDataSource(gh<_i454.SupabaseClient>()),
     );
@@ -94,9 +90,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i302.LocalKeysService>(),
         gh<_i454.SupabaseClient>(),
       ),
-    );
-    gh.lazySingleton<_i549.TeamRepositoryDomain>(
-      () => _i1012.TeamRepositoryData(gh<_i415.BaseTeamRemoteDataSource>()),
     );
     gh.lazySingleton<_i608.ProfileRepositoryDomain>(
       () =>
@@ -111,6 +104,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i361.Dio>(),
         gh<_i745.AudioService>(),
       ),
+    );
+    gh.lazySingleton<_i415.BaseTeamRemoteDataSource>(
+      () => _i415.TeamRemoteDataSource(gh<_i454.SupabaseClient>()),
     );
     gh.factory<_i750.ProfileCubit>(
       () => _i750.ProfileCubit(gh<_i455.ProfileUseCase>()),
@@ -131,9 +127,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i153.BaseAdminHomeScreenRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i13.TeamUseCase>(
-      () => _i13.TeamUseCase(gh<_i549.TeamRepositoryDomain>()),
-    );
     gh.lazySingleton<_i471.TasksBoardUseCase>(
       () => _i471.TasksBoardUseCase(gh<_i638.TasksBoardRepositoryDomain>()),
     );
@@ -141,6 +134,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i147.AudioFeatureRepositoryData(
         gh<_i414.BaseAudioFeatureRemoteDataSource>(),
       ),
+    );
+    gh.lazySingleton<_i549.TeamRepositoryDomain>(
+      () => _i1012.TeamRepositoryData(gh<_i415.BaseTeamRemoteDataSource>()),
     );
     gh.lazySingleton<_i363.AddTaskScreenRepositoryDomain>(
       () => _i27.AddTaskScreenRepositoryData(
@@ -159,6 +155,10 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i79.AddTaskScreenUseCase(gh<_i363.AddTaskScreenRepositoryDomain>()),
     );
+    gh.lazySingleton<_i13.TeamUseCase>(
+      () => _i13.TeamUseCase(gh<_i549.TeamRepositoryDomain>()),
+    );
+    gh.factory<_i607.TeamCubit>(() => _i607.TeamCubit(gh<_i13.TeamUseCase>()));
     return this;
   }
 }

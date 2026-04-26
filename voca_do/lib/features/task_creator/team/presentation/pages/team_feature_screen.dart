@@ -7,37 +7,40 @@ class TeamFeatureScreen extends StatelessWidget {
   const TeamFeatureScreen({super.key});
   @override
   Widget build(BuildContext context) {
-      final _ = context.read<TeamCubit>();
+    final _ = context.read<TeamCubit>();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Team Feature Screen')),
-      body: Column(children: [
-          BlocBuilder<TeamCubit, TeamState>(
-  builder: (context, state) {
-    if (state is TeamLoadingState) {
-      return CircularProgressIndicator();
-    }
+      body: Column(
+        children: [
+          Expanded(
+            child: BlocBuilder<TeamCubit, TeamState>(
+              builder: (context, state) {
+                if (state is TeamLoadingState) {
+                  return CircularProgressIndicator();
+                }
 
-    if (state is TeamSuccessState) {
-      return ListView.builder(
-        itemCount: state.team.length,
-        itemBuilder: (context, index) {
-          final user = state.team[index];
-          return ListTile(
-            title: Text(user.firstName),
-            subtitle: Text(user.lastName),
-          );
-        },
-      );
-    }
+                if (state is TeamSuccessState) {
+                  return ListView.builder(
+                    itemCount: state.team.length,
+                    itemBuilder: (context, index) {
+                      final user = state.team[index];
+                      return ListTile(
+                        title: Text(user.name),
+                        subtitle: Text(user.role),
+                      );
+                    },
+                  );
+                }
 
-    if (state is TeamErrorState) {
-      return Text(state.message);
-    }
+                if (state is TeamErrorState) {
+                  return Text(state.message);
+                }
 
-    return SizedBox();
-  },
-)
+                return SizedBox();
+              },
+            ),
+          ),
         ],
       ),
     );
