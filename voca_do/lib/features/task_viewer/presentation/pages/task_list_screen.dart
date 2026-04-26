@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
+import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_state.dart';
 
 class TaskListScreen extends StatelessWidget {
-  final String title;
-  final String? assigneeId;
-  final List<TaskViewerEntity> tasks;
+  final String status;
 
   const TaskListScreen({
     super.key,
-    required this.title,
-    this.assigneeId,
-    required this.tasks,
+    required this.status,
   });
 
   @override
@@ -28,71 +24,84 @@ class TaskListScreen extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(18),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              IconButton(
-                padding: EdgeInsets.zero,
-                alignment: Alignment.centerLeft,
-                onPressed: () =>  context.pop(),
-                // onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.arrow_back_ios),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                '$title Task need to done',
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: tasks.length,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 14),
-                  itemBuilder: (context, index) {
-                    return TaskListCard(
-                      task: tasks[index],
-                      assigneeId: assigneeId!,
-                    );
-                  },
-                ),
-              ),
-            ],
+          child: BlocBuilder<TaskViewerCubit, TaskViewerState>(
+            builder: (context, state) {
+              if (state is TaskViewerLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              if (state is TaskViewerError) {
+                return Center(child: Text(state.message));
+              }
+
+              if (state is TaskViewerSuccess) {
+                final tasks = context.read<TaskViewerCubit>().getTasksByStatus(status);
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      alignment: Alignment.centerLeft,
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.arrow_back_ios),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      '${_getStatusTitle(status)} Task need to done',
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount: tasks.length,
+                        separatorBuilder: (context, index) => const SizedBox(height: 14),
+                        itemBuilder: (context, index) {
+                          return TaskListCard(task: tasks[index]);
+                        },
+                      ),
+                    ),
+                  ],
+                );
+              }
+
+              return const SizedBox();
+            },
           ),
         ),
       ),
     );
   }
+
+  String _getStatusTitle(String status) {
+    switch (status) {
+      case 'new':
+        return 'New';
+      case 'late':
+        return 'Late';
+      case 'in_progress':
+        return 'In Progress';
+      default:
+        return 'Tasks';
+    }
+  }
 }
 
-class TaskListCard extends StatefulWidget {
+class TaskListCard extends StatelessWidget {
   final TaskViewerEntity task;
-  final String assigneeId;
 
   const TaskListCard({
     super.key,
     required this.task,
-    required this.assigneeId,
   });
 
   @override
-  State<TaskListCard> createState() => _TaskListCardState();
-}
-
-class _TaskListCardState extends State<TaskListCard> {
-  late bool isCompleted;
-
-  @override
-  void initState() {
-    super.initState();
-    isCompleted = widget.task.status.toLowerCase() == 'completed';
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final isCompleted = task.status.toLowerCase() == 'completed';
+
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -100,7 +109,7 @@ class _TaskListCardState extends State<TaskListCard> {
         borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
-            color: Colors.purple.withOpacity(0.07),
+            color: Colors.purple,
             blurRadius: 18,
             offset: const Offset(0, 8),
           ),
@@ -113,7 +122,7 @@ class _TaskListCardState extends State<TaskListCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Task 02',
+                  'Task',
                   style: TextStyle(
                     color: Color(0xffFF5C6C),
                     fontSize: 12,
@@ -122,12 +131,11 @@ class _TaskListCardState extends State<TaskListCard> {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  widget.task.title,
+                  task.title,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
-                    decoration:
-                        isCompleted ? TextDecoration.lineThrough : null,
+                    decoration: isCompleted ? TextDecoration.lineThrough : null,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -136,7 +144,7 @@ class _TaskListCardState extends State<TaskListCard> {
                     const Icon(Icons.flag, size: 20, color: Colors.red),
                     const SizedBox(width: 6),
                     Text(
-                      widget.task.dueDate,
+                      task.dueDate,
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -147,18 +155,11 @@ class _TaskListCardState extends State<TaskListCard> {
           Checkbox(
             value: isCompleted,
             activeColor: const Color(0xff1B4E77),
-            onChanged: (value) {
-              setState(() {
-                isCompleted = value ?? false;
-              });
-
-              if (isCompleted) {
-                context.read<TaskViewerCubit>().completeTask(
-                      taskId: widget.task.id,
-                      assigneeId: widget.assigneeId,
-                    );
-              }
-            },
+            onChanged: isCompleted
+                ? null
+                : (_) {
+                    context.read<TaskViewerCubit>().completeTask(taskId: task.id);
+                  },
           ),
         ],
       ),
