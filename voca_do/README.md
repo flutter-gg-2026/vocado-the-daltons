@@ -66,7 +66,43 @@ Instead of typing tasks manually, users simply speak — and the system intellig
 }
 ```
 
+---
 
+## 📱 App Screens
+
+### 🔐 Authentication
+
+<div align="center">
+  <img src="assets/screenshots/login.png" width="220"/>
+  <img src="assets/screenshots/signup.png" width="220"/>
+</div>
+
+---
+
+### 👤 User Experience
+
+<div align="center">
+  <img src="assets/screenshots/user_dashboard.png" width="250"/>
+</div>
+
+> 📌 Users can view and track their assigned tasks easily
+
+---
+
+### 🛠️ Admin Panel
+
+<div align="center">
+  <img src="assets/screenshots/admin_home.png" width="200"/>
+  <img src="assets/screenshots/team.png" width="200"/>
+  <img src="assets/screenshots/task_board.png" width="200"/>
+  <img src="assets/screenshots/profile.png" width="200"/>
+</div>
+
+> ⚙️ Admin has full control over tasks, team, and workflow
+
+---
+
+## Supabase Structure
 
 ```
 ┌──────────────────────┐
