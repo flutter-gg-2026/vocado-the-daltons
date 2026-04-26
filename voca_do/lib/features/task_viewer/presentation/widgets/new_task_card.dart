@@ -11,11 +11,14 @@ class NewTaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       width: 185,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xffB99AD0),
+        color: colorScheme.primary,
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
@@ -25,19 +28,25 @@ class NewTaskCard extends StatelessWidget {
             task.title,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 15,
+            style: textTheme.bodyLarge?.copyWith(
+              color: colorScheme.onPrimary,
               fontWeight: FontWeight.w800,
             ),
           ),
           const SizedBox(height: 12),
           Row(
             children: [
-              const Icon(Icons.flag, size: 18, color: Colors.grey),
+              Icon(
+                Icons.flag,
+                size: 18,
+                color: colorScheme.onPrimary,
+              ),
               const SizedBox(width: 6),
               Text(
                 task.dueDate,
-                style: const TextStyle(fontSize: 12),
+                style: textTheme.bodySmall?.copyWith(
+                  color: colorScheme.onPrimary,
+                ),
               ),
             ],
           ),
@@ -48,21 +57,24 @@ class NewTaskCard extends StatelessWidget {
               vertical: 9,
             ),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.25),
+              color: colorScheme.onPrimary,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'select a task status',
-                  style: TextStyle(fontSize: 10, color: Colors.white),
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onPrimary,
+                    fontSize: 10,
+                  ),
                 ),
-                SizedBox(width: 6),
+                const SizedBox(width: 6),
                 Icon(
                   Icons.keyboard_arrow_down,
                   size: 16,
-                  color: Colors.white,
+                  color: colorScheme.onPrimary,
                 ),
               ],
             ),

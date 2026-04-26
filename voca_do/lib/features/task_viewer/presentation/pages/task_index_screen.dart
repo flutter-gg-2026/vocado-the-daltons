@@ -12,8 +12,11 @@ class TaskIndexScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: BlocBuilder<TaskViewerCubit, TaskViewerState>(
         builder: (context, state) {
           if (state is TaskViewerLoading) {
@@ -24,7 +27,9 @@ class TaskIndexScreen extends StatelessWidget {
             return Center(
               child: Text(
                 state.message,
-                style: const TextStyle(color: Colors.white),
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.error,
+                ),
               ),
             );
           }
@@ -49,15 +54,15 @@ class TaskIndexScreen extends StatelessWidget {
                   vertical: 28,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: colorScheme.surface,
                   borderRadius: BorderRadius.circular(18),
                 ),
                 child: ListView(
                   children: [
                     Text(
                       'Hello, ${state.dashboard.userName}',
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.onSurface,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -75,7 +80,7 @@ class TaskIndexScreen extends StatelessWidget {
                     TaskHorizontalSection(
                       title: 'Late',
                       count: lateTasks.length.toString(),
-                      countColor: const Color(0xffFF6F79),
+                      countColor: colorScheme.error,
                       tasks: lateTasks,
                       type: TaskHorizontalSectionType.late,
                       onViewAll: () => _goToTaskList(
@@ -87,7 +92,7 @@ class TaskIndexScreen extends StatelessWidget {
                     TaskVerticalSection(
                       title: 'In Progress',
                       count: inProgressTasks.length.toString(),
-                      countColor: const Color(0xffFFE37A),
+                      countColor: colorScheme.secondary,
                       tasks: inProgressTasks,
                       onViewAll: () => _goToTaskList(
                         context: context,

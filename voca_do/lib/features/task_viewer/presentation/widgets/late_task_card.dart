@@ -11,21 +11,23 @@ class LateTaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       width: 145,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xffEFECF5),
+        color: colorScheme.secondaryContainer,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Late',
-            style: TextStyle(
-              color: Color(0xffFF5C6C),
-              fontSize: 12,
+            style: textTheme.bodySmall?.copyWith(
+              color: colorScheme.error,
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -34,24 +36,28 @@ class LateTaskCard extends StatelessWidget {
             task.title,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 14,
+            style: textTheme.bodyMedium?.copyWith(
+              color: colorScheme.onSurface,
               fontWeight: FontWeight.w800,
             ),
           ),
           const SizedBox(height: 12),
           Row(
             children: [
-              const Icon(Icons.flag, color: Colors.red, size: 18),
+              Icon(Icons.flag, color: colorScheme.error, size: 18),
               const SizedBox(width: 6),
               Text(
                 task.dueDate,
-                style: const TextStyle(fontSize: 12),
+                style: textTheme.bodySmall,
               ),
             ],
           ),
           const SizedBox(height: 10),
-          const Icon(Icons.check_box_outline_blank, size: 18),
+          Icon(
+            Icons.check_box_outline_blank,
+            size: 18,
+            color: colorScheme.onSurfaceVariant,
+          ),
         ],
       ),
     );

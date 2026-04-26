@@ -11,11 +11,14 @@ class InProgressTaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xffE7F7F8),
+        color: colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -28,28 +31,32 @@ class InProgressTaskCard extends StatelessWidget {
                   task.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Row(
+                Row(
                   children: [
-                    Icon(Icons.flag, size: 17, color: Colors.grey),
-                    SizedBox(width: 6),
+                    Icon(
+                      Icons.flag,
+                      size: 17,
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    const SizedBox(width: 6),
                     Text(
-                      '6 hours',
-                      style: TextStyle(fontSize: 12),
+                      task.dueDate,
+                      style: textTheme.bodySmall,
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          const Icon(
+          Icon(
             Icons.check_box_outline_blank,
-            color: Color(0xff1B4E77),
+            color: colorScheme.primary,
           ),
         ],
       ),

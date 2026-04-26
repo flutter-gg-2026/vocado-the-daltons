@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_state.dart';
@@ -14,14 +15,17 @@ class TaskListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: colorScheme.surface,
             borderRadius: BorderRadius.circular(18),
           ),
           child: BlocBuilder<TaskViewerCubit, TaskViewerState>(
@@ -31,11 +35,20 @@ class TaskListScreen extends StatelessWidget {
               }
 
               if (state is TaskViewerError) {
-                return Center(child: Text(state.message));
+                return Center(
+                  child: Text(
+                    state.message,
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.error,
+                    ),
+                  ),
+                );
               }
 
               if (state is TaskViewerSuccess) {
-                final tasks = context.read<TaskViewerCubit>().getTasksByStatus(status);
+                final tasks = context.read<TaskViewerCubit>().getTasksByStatus(
+                      status,
+                    );
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,14 +56,17 @@ class TaskListScreen extends StatelessWidget {
                     IconButton(
                       padding: EdgeInsets.zero,
                       alignment: Alignment.centerLeft,
-                      onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.arrow_back_ios),
+                      onPressed: () => context.pop(),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: colorScheme.onSurface,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Text(
                       '${_getStatusTitle(status)} Task need to done',
-                      style: const TextStyle(
-                        fontSize: 15,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: colorScheme.onSurface,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -58,7 +74,8 @@ class TaskListScreen extends StatelessWidget {
                     Expanded(
                       child: ListView.separated(
                         itemCount: tasks.length,
-                        separatorBuilder: (context, index) => const SizedBox(height: 14),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 14),
                         itemBuilder: (context, index) {
                           return TaskListCard(task: tasks[index]);
                         },
@@ -101,15 +118,17 @@ class TaskListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isCompleted = task.status.toLowerCase() == 'completed';
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: const Color(0xffFCFAFF),
+        color: colorScheme.surface,
         borderRadius: BorderRadius.circular(22),
         boxShadow: [
           BoxShadow(
-            color: Colors.purple,
+            color: colorScheme.shadow.withOpacity(0.08),
             blurRadius: 18,
             offset: const Offset(0, 8),
           ),
@@ -121,19 +140,18 @@ class TaskListCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Task',
-                  style: TextStyle(
-                    color: Color(0xffFF5C6C),
-                    fontSize: 12,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colorScheme.error,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   task.title,
-                  style: TextStyle(
-                    fontSize: 13,
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface,
                     fontWeight: FontWeight.w600,
                     decoration: isCompleted ? TextDecoration.lineThrough : null,
                   ),
@@ -141,11 +159,11 @@ class TaskListCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    const Icon(Icons.flag, size: 20, color: Colors.red),
+                    Icon(Icons.flag, size: 20, color: colorScheme.error),
                     const SizedBox(width: 6),
                     Text(
                       task.dueDate,
-                      style: const TextStyle(fontSize: 12),
+                      style: textTheme.bodySmall,
                     ),
                   ],
                 ),
@@ -154,11 +172,13 @@ class TaskListCard extends StatelessWidget {
           ),
           Checkbox(
             value: isCompleted,
-            activeColor: const Color(0xff1B4E77),
+            activeColor: colorScheme.primary,
             onChanged: isCompleted
                 ? null
                 : (_) {
-                    context.read<TaskViewerCubit>().completeTask(taskId: task.id);
+                    context.read<TaskViewerCubit>().completeTask(
+                          taskId: task.id,
+                        );
                   },
           ),
         ],

@@ -16,6 +16,9 @@ class TaskSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -23,8 +26,8 @@ class TaskSectionHeader extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 15,
+              style: textTheme.titleMedium?.copyWith(
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -32,11 +35,12 @@ class TaskSectionHeader extends StatelessWidget {
               const SizedBox(width: 8),
               CircleAvatar(
                 radius: 14,
-                backgroundColor: countColor ?? Colors.grey.shade200,
+                backgroundColor:
+                    countColor ?? colorScheme.surfaceContainerHighest,
                 child: Text(
                   count!,
-                  style: const TextStyle(
-                    fontSize: 12,
+                  style: textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurface,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -46,10 +50,10 @@ class TaskSectionHeader extends StatelessWidget {
         ),
         GestureDetector(
           onTap: onViewAll,
-          child: const Text(
+          child: Text(
             'View all',
-            style: TextStyle(
-              fontSize: 12,
+            style: textTheme.bodySmall?.copyWith(
+              color: colorScheme.primary,
               fontWeight: FontWeight.w500,
             ),
           ),
