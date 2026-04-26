@@ -7,7 +7,6 @@ import 'package:voca_do/features/auth/login/presentation/cubit/login_cubit.dart'
 import 'package:voca_do/features/auth/login/presentation/pages/login_feature_screen.dart';
 import 'package:voca_do/features/auth/sign_up/presentation/cubit/sign_up_cubit.dart';
 import 'package:voca_do/features/auth/sign_up/presentation/pages/sign_up_feature_screen.dart';
-import 'package:voca_do/features/task_creator/home/presentation/pages/home_feature_screen.dart';
 import 'package:voca_do/features/task_creator/presentation/pages/task_creator_feature_screen.dart';
 import 'package:voca_do/features/task_creator/profile/presentation/cubit/profile_cubit.dart';
 import 'package:voca_do/features/task_creator/profile/presentation/pages/profile_feature_screen.dart';
@@ -62,13 +61,7 @@ class AppRouter {
         path: Routes.taskCreator,
         builder: (context, state) => const TaskCreatorFeatureScreen(),
       ),
-      GoRoute(
-        path: Routes.home,
-        builder: (context, state) => BlocProvider(
-          create: (context) => HomeCubit(GetIt.I.get()),
-          child: const HomeFeatureScreen(),
-        ),
-      ),
+
       GoRoute(
         path: Routes.taskViewer,
         builder: (context, state) => BlocProvider(
