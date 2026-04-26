@@ -59,8 +59,7 @@ Instead of typing tasks manually, users simply speak — and the system intellig
 
 
 
-
----
+```
 ┌──────────────────────┐
 │   auth.users         │
 │----------------------│
@@ -98,7 +97,7 @@ Instead of typing tasks manually, users simply speak — and the system intellig
         │ status task_status          │
         │ created_at                  │
         └──────────────────────────────┘
----
+```
 
 ## 👥 Team
 
@@ -112,4 +111,4 @@ Instead of typing tasks manually, users simply speak — and the system intellig
 
 </div>
 
----
+
