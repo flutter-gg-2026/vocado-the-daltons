@@ -8,10 +8,7 @@ class Formatters {
     return DateFormat('EEEE, d MMMM yyyy').format(date);
   }
 
-  static String formatCurrency(double amount, {String symbol = '\$'}) {
-    return '$symbol${amount.toStringAsFixed(2)}';
-  }
-
+  
   static String formatDate(DateTime date) {
     return DateFormat('yyyy-MM-dd').format(date);
   }
