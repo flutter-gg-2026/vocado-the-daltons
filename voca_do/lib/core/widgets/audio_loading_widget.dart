@@ -7,7 +7,7 @@ class AudioLoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoadingAnimationWidget.staggeredDotsWave(
-      color: Theme.of(context).colorScheme.primary,
+      color: Colors.deepPurple,
       size: 50,
     );
   }

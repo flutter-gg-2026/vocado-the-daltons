@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// <<<<<<< HEAD:voca_do/lib/features/task_creator/sub/add_task_screen/presentation/pages/add_task_screen_feature_screen.dart
 import 'package:get_it/get_it.dart';
 import 'package:voca_do/features/task_creator/home/sub/add_task_screen/presentation/cubit/add_task_screen_cubit.dart';
 import 'package:voca_do/features/task_creator/home/sub/add_task_screen/presentation/cubit/add_task_screen_state.dart';
 import 'package:voca_do/features/task_creator/home/sub/audio_feature/presentation/cubit/audio_feature_cubit.dart';
 import 'package:voca_do/features/task_creator/home/sub/audio_feature/presentation/cubit/audio_feature_state.dart';
 import 'package:voca_do/features/task_creator/home/sub/audio_feature/presentation/pages/audio_feature_feature_widget.dart';
-// import 'package:voca_do/features/task_creator/sub/add_task_screen/presentation/cubit/add_task_screen_cubit.dart';
-// import 'package:voca_do/features/task_creator/sub/add_task_screen/presentation/cubit/add_task_screen_state.dart'; // Make sure to import this!
-// import 'package:voca_do/features/task_creator/sub/audio_feature/presentation/pages/audio_feature_feature_widget.dart';
-// import 'package:voca_do/features/task_creator/sub/audio_feature/presentation/cubit/audio_feature_cubit.dart';
-// import 'package:voca_do/features/task_creator/sub/audio_feature/presentation/cubit/audio_feature_state.dart';
-// =======
-// import 'package:voca_do/features/task_creator/home/sub/add_task_screen/presentation/cubit/add_task_screen_cubit.dart';
-// import 'package:voca_do/features/task_creator/home/sub/audio_feature/presentation/pages/audio_feature_feature_widget.dart';
-// >>>>>>> develop:voca_do/lib/features/task_creator/home/sub/add_task_screen/presentation/pages/add_task_screen_feature_screen.dart
 
 class AddTaskScreenFeatureScreen extends StatelessWidget {
   const AddTaskScreenFeatureScreen({super.key});
@@ -27,7 +17,12 @@ class AddTaskScreenFeatureScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => AudioFeatureCubit(GetIt.I.get()),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Add Task')),
+        appBar: AppBar(
+          title: const Text(
+            'Add Task',
+            style: TextStyle(fontWeight: .bold, fontSize: 24),
+          ),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -62,6 +57,14 @@ class AddTaskScreenFeatureScreen extends StatelessWidget {
                   }
 
                   return ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      foregroundColor: Colors.white,
+
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                    ),
                     onPressed: () {
                       final audioState = context
                           .read<AudioFeatureCubit>()
@@ -83,7 +86,14 @@ class AddTaskScreenFeatureScreen extends StatelessWidget {
                         );
                       }
                     },
-                    child: const Text('Approve Task'),
+                    child: const Text(
+                      'Approve Task',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.0,
+                      ),
+                    ),
                   );
                 },
               ),

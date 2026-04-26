@@ -32,8 +32,8 @@ class AudioFeatureFeatureWidget extends StatelessWidget {
                   color: state is AudioFeatureRecordingState
                       ? state.isRecording
                             ? Colors.redAccent
-                            : Colors.blueAccent
-                      : Colors.blueAccent,
+                            : Colors.black
+                      : Colors.black,
                   shape: BoxShape.circle,
                 ),
                 child: Pulse(

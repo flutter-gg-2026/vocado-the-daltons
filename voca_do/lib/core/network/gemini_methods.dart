@@ -67,7 +67,6 @@ extension GeminiMethods on DioClient {
 
       return jsonDecode(rawJsonString) as Map<String, dynamic>;
     } on DioException catch (e) {
-      print("❌ Gemini Details: ${e.response?.data}");
       rethrow;
     }
   }

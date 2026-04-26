@@ -10,7 +10,12 @@ class TeamFeatureScreen extends StatelessWidget {
     final _ = context.read<TeamCubit>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Team')),
+      appBar: AppBar(
+        title: const Text(
+          'Team',
+          style: TextStyle(fontWeight: .bold, fontSize: 24),
+        ),
+      ),
       body: Center(
         child: SizedBox(
           height: 500,
@@ -19,7 +24,7 @@ class TeamFeatureScreen extends StatelessWidget {
               if (state is TeamLoadingState) {
                 return CircularProgressIndicator();
               }
-          
+
               if (state is TeamSuccessState) {
                 return Center(
                   child: ListView.builder(
@@ -30,7 +35,7 @@ class TeamFeatureScreen extends StatelessWidget {
                       return Container(
                         width: 220,
                         height: 220,
-          
+
                         margin: const EdgeInsets.only(
                           right: 20,
                           bottom: 20,
@@ -99,16 +104,15 @@ class TeamFeatureScreen extends StatelessWidget {
                           ],
                         ),
                       );
-          
                     },
                   ),
                 );
               }
-          
+
               if (state is TeamErrorState) {
                 return Text(state.message);
               }
-          
+
               return SizedBox.shrink();
             },
           ),

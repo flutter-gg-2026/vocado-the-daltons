@@ -17,7 +17,7 @@ abstract class AppTheme {
     scaffoldBackgroundColor: AppColors.background,
     textTheme: AppTextTheme.lightTextTheme,
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.surface,
+      backgroundColor: AppColors.background,
       elevation: 0,
       centerTitle: true,
       iconTheme: IconThemeData(color: AppColors.textPrimary),
@@ -60,4 +60,3 @@ abstract class AppTheme {
     textTheme: AppTextTheme.darkTextTheme,
   );
 }
-
