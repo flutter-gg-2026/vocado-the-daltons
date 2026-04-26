@@ -38,8 +38,8 @@ class LoginFeatureScreen extends HookWidget {
               case LoginSuccessState _:
                 if (state.role == UserRole.admin) {
                   context.go(Routes.taskCreator);
-                } else {
-                  context.go(Routes.taskViewer);
+                } else if (state.role == UserRole.user) {
+                  context.go(Routes.taskList);
                 }
                 break;
 

@@ -9,7 +9,7 @@ class TasksBoardFeatureScreen extends StatelessWidget {
       final _ = context.read<TasksBoardCubit>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('TasksBoard Feature Screen')),
+      appBar: AppBar(title: const Text('TasksBoard Feature Screen'),),
       body: Column(children: [
           
         ],

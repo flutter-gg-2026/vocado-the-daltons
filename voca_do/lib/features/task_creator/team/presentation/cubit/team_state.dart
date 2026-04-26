@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:voca_do/features/task_creator/team/domain/entities/team_entity.dart';
 
 abstract class TeamState extends Equatable {
   const TeamState();
@@ -8,7 +9,16 @@ abstract class TeamState extends Equatable {
 }
 
 class TeamInitialState extends TeamState {}
-class TeamSuccessState extends TeamState {}
+class TeamLoadingState extends TeamState {}
+
+
+class TeamSuccessState extends TeamState {
+  final List<TeamEntity> team;
+  const TeamSuccessState(this.team);
+
+  @override
+  List<Object?> get props => [team];
+}
 
 class TeamErrorState extends TeamState {
   final String message;
@@ -16,4 +26,3 @@ class TeamErrorState extends TeamState {
   @override
   List<Object?> get props => [message];
 }
-

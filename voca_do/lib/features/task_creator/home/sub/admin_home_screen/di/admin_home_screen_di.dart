@@ -5,7 +5,7 @@
 // @InjectableInit(
 //   initializerName: 'initAdminHomeScreen',
 //    // Optional: specify the directory to scan for injectable annotations
-//   generateForDir: ['lib/features/task_creator/home/sub/add_task_screen'],
+//   generateForDir: ['lib/features/task_creator/home/sub/admin_home_screen'],
 // )
 // void configureAdminHomeScreen(GetIt getIt) {
 //   getIt.initAdminHomeScreen();

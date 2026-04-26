@@ -53,9 +53,9 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
                 .where((task) => task.status.toLowerCase() == 'new')
                 .toList();
 
-           final lateTasks = state.tasks
-    .where((task) => task.status.toLowerCase() == 'late')
-    .toList();
+            final lateTasks = state.tasks
+                .where((task) => task.status.toLowerCase() == 'late')
+                .toList();
 
             final inProgressTasks = state.tasks
                 .where((task) => task.status.toLowerCase() == 'in_progress')
@@ -87,10 +87,7 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
                       tasks: newTasks,
                       type: TaskHorizontalSectionType.newTask,
                       onViewAll: () {
-                        _goToTaskList(
-                          title: 'New Tasks',
-                          tasks: newTasks,
-                        );
+                        _goToTaskList(title: 'New Tasks', tasks: newTasks);
                       },
                     ),
                     const SizedBox(height: 26),
@@ -101,10 +98,7 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
                       tasks: lateTasks,
                       type: TaskHorizontalSectionType.late,
                       onViewAll: () {
-                        _goToTaskList(
-                          title: 'Late',
-                          tasks: lateTasks,
-                        );
+                        _goToTaskList(title: 'Late', tasks: lateTasks);
                       },
                     ),
                     const SizedBox(height: 26),
@@ -131,18 +125,26 @@ class _TaskIndexScreenState extends State<TaskIndexScreen> {
       ),
     );
   }
-
-  void _goToTaskList({
-    required String title,
-    required List<TaskViewerEntity> tasks,
-  }) {
-    context.push(
-      Routes.taskList,
-      extra: {
-        'title': title,
-        'tasks': tasks,
-        'assigneeId': widget.assigneeId,
-      },
-    );
-  }
+void _goToTaskList({
+  required String title,
+  required List<TaskViewerEntity> tasks,
+}) {
+  context.go(
+    Routes.taskList,
+    extra: {
+      'title': title,
+      'tasks': tasks,
+      'assigneeId': widget.assigneeId.isNotEmpty ? widget.assigneeId : null,
+    },
+  );
+}
+  // void _goToTaskList({
+  //   required String title,
+  //   required List<TaskViewerEntity> tasks,
+  // }) {
+  //   context.push(
+  //     Routes.taskList,
+  //     extra: {'title': title, 'tasks': tasks, 'assigneeId': widget.assigneeId},
+  //   );
+  // }
 }

@@ -9,16 +9,14 @@ abstract class TeamModel with _$TeamModel {
     required int id,
     required String firstName,
     required String lastName,
-    
   }) = _TeamModel;
 
-  factory TeamModel.fromJson(Map<String, Object?> json) => _$TeamModelFromJson(json);
+  factory TeamModel.fromJson(Map<String, Object?> json) =>
+      _$TeamModelFromJson(json);
 }
-
-
 
 extension TeamModelMapper on TeamModel {
   TeamEntity toEntity() {
     return TeamEntity(id: id, firstName: firstName, lastName: lastName);
   }
-  }
+}

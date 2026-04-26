@@ -5,7 +5,7 @@
 // @InjectableInit(
 //   initializerName: 'initAudioFeatureSub',
 //    // Optional: specify the directory to scan for injectable annotations
-//   generateForDir: ['lib/features/task_creator/home/sub/add_task_screen'],
+//   generateForDir: ['lib/features/task_creator/home/sub/audio_feature'],
 // )
 // void configureAudioFeatureSub(GetIt getIt) {
 //   getIt.initAudioFeatureSub();

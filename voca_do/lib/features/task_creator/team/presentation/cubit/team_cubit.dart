@@ -11,17 +11,11 @@ class TeamCubit extends Cubit<TeamState> {
     final result = await _teamUseCase.getTeam();
     result.when(
       (success) {
-        //here is when success result
+        emit(TeamSuccessState(success));
       },
       (whenError) {
-       //here is when error result
+        emit(TeamErrorState(message: whenError.message));
       },
     );
-  }
-
-  @override
-  Future<void> close() {
-    //here is when close cubit
-    return super.close();
   }
 }

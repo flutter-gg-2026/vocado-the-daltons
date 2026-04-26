@@ -11,7 +11,7 @@ class TeamUseCase {
 
   TeamUseCase(this._repositoryData);
 
-   Future<Result<TeamEntity, Failure>> getTeam() async {
+   Future<Result<List<TeamEntity>, Failure>> getTeam() async {
     return _repositoryData.getTeam();
   }
 }

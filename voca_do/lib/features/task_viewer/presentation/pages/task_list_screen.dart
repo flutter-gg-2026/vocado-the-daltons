@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:voca_do/features/task_viewer/domain/entities/task_viewer_entity.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 
 class TaskListScreen extends StatelessWidget {
   final String title;
-  final String assigneeId;
+  final String? assigneeId;
   final List<TaskViewerEntity> tasks;
 
   const TaskListScreen({
     super.key,
     required this.title,
-    required this.assigneeId,
+    this.assigneeId,
     required this.tasks,
   });
 
@@ -33,7 +34,8 @@ class TaskListScreen extends StatelessWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 alignment: Alignment.centerLeft,
-                onPressed: () => Navigator.pop(context),
+                onPressed: () =>  context.pop(),
+                // onPressed: () => Navigator.pop(context),
                 icon: const Icon(Icons.arrow_back_ios),
               ),
               const SizedBox(height: 20),
@@ -53,7 +55,7 @@ class TaskListScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return TaskListCard(
                       task: tasks[index],
-                      assigneeId: assigneeId,
+                      assigneeId: assigneeId!,
                     );
                   },
                 ),

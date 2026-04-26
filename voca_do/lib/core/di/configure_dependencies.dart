@@ -30,4 +30,5 @@ Future<void> configureDependencies() async {
   configureTeam(getIt);
   configureHome(getIt);
   configureLogout(getIt);
+  
 }

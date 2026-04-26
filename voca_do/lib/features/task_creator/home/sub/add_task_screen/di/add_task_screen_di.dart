@@ -1,6 +1,6 @@
 // import 'package:get_it/get_it.dart';
 // import 'package:injectable/injectable.dart';
-// import 'add_task_screen_di.config.dart'; 
+// import 'add_task_screen_di.config.dart';
 
 // @InjectableInit(
 //   initializerName: 'initAddTaskScreen',
