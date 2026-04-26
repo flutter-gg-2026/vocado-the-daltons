@@ -1,22 +1,27 @@
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
+import 'package:voca_do/core/navigation/routers.dart';
 import 'package:voca_do/features/auth/login/presentation/cubit/login_cubit.dart';
 import 'package:voca_do/features/auth/login/presentation/pages/login_feature_screen.dart';
 import 'package:voca_do/features/auth/sign_up/presentation/cubit/sign_up_cubit.dart';
 import 'package:voca_do/features/auth/sign_up/presentation/pages/sign_up_feature_screen.dart';
+import 'package:voca_do/features/task_creator/home/presentation/pages/home_feature_screen.dart';
 import 'package:voca_do/features/task_creator/presentation/pages/task_creator_feature_screen.dart';
-import 'package:voca_do/features/task_viewer/presentation/pages/task_index_screen.dart';
-
-import 'routers.dart';
-import 'package:get_it/get_it.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:voca_do/features/task_creator/profile/presentation/cubit/profile_cubit.dart';
+import 'package:voca_do/features/task_creator/profile/presentation/pages/profile_feature_screen.dart';
+import 'package:voca_do/features/task_creator/tasks_board/presentation/cubit/tasks_board_cubit.dart';
+import 'package:voca_do/features/task_creator/tasks_board/presentation/pages/tasks_board_feature_screen.dart';
+import 'package:voca_do/features/task_creator/team/presentation/cubit/team_cubit.dart';
+import 'package:voca_do/features/task_creator/team/presentation/pages/team_feature_screen.dart';
 import 'package:voca_do/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
+import 'package:voca_do/features/task_viewer/presentation/pages/task_index_screen.dart';
+import 'package:voca_do/features/task_viewer/presentation/pages/task_list_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.taskCreator,
+    initialLocation: Routes.login,
     routes: [
       GoRoute(
         path: Routes.login,
@@ -32,65 +37,57 @@ class AppRouter {
           child: const SignUpFeatureScreen(),
         ),
       ),
-
+      GoRoute(
+        path: Routes.profile,
+        builder: (context, state) => BlocProvider(
+          create: (context) => ProfileCubit(GetIt.I.get()),
+          child: const ProfileFeatureScreen(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.tasksBoard,
+        builder: (context, state) => BlocProvider(
+          create: (context) => TasksBoardCubit(GetIt.I.get()),
+          child: const TasksBoardFeatureScreen(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.team,
+        builder: (context, state) => BlocProvider(
+          create: (context) => TeamCubit(GetIt.I.get()),
+          child: const TeamFeatureScreen(),
+        ),
+      ),
       GoRoute(
         path: Routes.taskCreator,
         builder: (context, state) => const TaskCreatorFeatureScreen(),
       ),
-
-      // =======
-      // GoRoute(
-      //   path: Routes.taskList,
-      //   builder: (context, state) {
-      //     final extra = state.extra as Map<String, dynamic>;
-
-      //     return BlocProvider.value(
-      //       value: GetIt.I<TaskViewerCubit>(),
-      //       child: TaskListScreen(
-      //         title: extra['title'] as String,
-      //         tasks: extra['tasks'] as List<TaskViewerEntity>,
-      //         assigneeId: extra['assigneeId'] as String,
-      //       ),
-      //     );
-      //   },
-      // ),
-
-      // GoRoute(
-      //   path: Routes.taskList,
-      //   builder: (context, state) {
-      //     final extra = state.extra as Map<String, dynamic>? ?? {};
-
-      //     return BlocProvider(
-      //       create: (context) => GetIt.I<TaskViewerCubit>(),
-      //       child: TaskIndexScreen(
-      //         assigneeId: extra['assigneeId'] as String,
-      //         userName: extra['userName'] as String,
-      //       ),
-      //     );
-      //   },
-      // ),
       GoRoute(
-        path: Routes.taskList,
+        path: Routes.home,
+        builder: (context, state) => BlocProvider(
+          create: (context) => HomeCubit(GetIt.I.get()),
+          child: const HomeFeatureScreen(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.taskViewer,
+        builder: (context, state) => BlocProvider(
+          create: (context) => GetIt.I<TaskViewerCubit>()..getUserTasks(),
+          child: const TaskIndexScreen(),
+        ),
+      ),
+      GoRoute(
+        path: '${Routes.taskList}/:status',
         builder: (context, state) {
-          final extra = state.extra as Map<String, dynamic>?;
-
-          final assigneeId = extra?['assigneeId'];
-          final userName = extra?['userName'];
-
-          if (assigneeId == null || userName == null) {
-            return const Scaffold(
-              body: Center(child: Text('Missing data when navigating')),
-            );
-          }
+          final status = state.pathParameters['status'] ?? 'new';
 
           return BlocProvider(
-            create: (context) => GetIt.I<TaskViewerCubit>(),
-            child: TaskIndexScreen(assigneeId: assigneeId, userName: userName),
+            create: (context) => GetIt.I<TaskViewerCubit>()..getUserTasks(),
+            child: TaskListScreen(status: status),
           );
         },
       ),
     ],
-
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),
   );
