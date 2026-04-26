@@ -57,6 +57,10 @@ Instead of typing tasks manually, users simply speak — and the system intellig
 }
 ```
 
+
+
+
+---
 ┌──────────────────────┐
 │   auth.users         │
 │----------------------│
