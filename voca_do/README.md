@@ -43,6 +43,15 @@ Instead of typing tasks manually, users simply speak — and the system intellig
 
 ---
 
+
+## 📊 Dashboard Experience
+
+- Clean overview of tasks  
+- Real-time status updates  
+- Easy navigation between categories
+
+  ---  
+
 ### 🎙️ AI Voice Processing (Admin)
 - Record voice commands
 - Convert speech → text
