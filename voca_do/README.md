@@ -55,7 +55,7 @@ Instead of typing tasks manually, users simply speak — and the system intellig
   "assignee": "Leen",
   "due_date": "2026-04-23"
 }
-
+```
 
 ┌──────────────────────┐
 │   auth.users         │
@@ -94,7 +94,7 @@ Instead of typing tasks manually, users simply speak — and the system intellig
         │ status task_status          │
         │ created_at                  │
         └──────────────────────────────┘
-
+---
 
 ## 👥 Team
 
