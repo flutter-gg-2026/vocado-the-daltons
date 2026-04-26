@@ -19,9 +19,9 @@ class TeamRepositoryData implements TeamRepositoryDomain {
     try {
       final response = await remoteDataSource.getTeam();
 
-    final entities = response.map((e) => e.toEntity()).toList();
+      final entities = response.map((e) => e.toEntity()).toList();
 
-    return Success(entities);
+      return Success(entities);
     } catch (error) {
       return Error(FailureExceptions.getException(error));
     }

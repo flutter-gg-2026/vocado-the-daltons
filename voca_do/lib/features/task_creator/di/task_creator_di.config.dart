@@ -58,6 +58,8 @@ import 'package:voca_do/features/task_creator/tasks_board/domain/repositories/ta
     as _i638;
 import 'package:voca_do/features/task_creator/tasks_board/domain/use_cases/tasks_board_use_case.dart'
     as _i471;
+import 'package:voca_do/features/task_creator/tasks_board/presentation/cubit/tasks_board_cubit.dart'
+    as _i372;
 import 'package:voca_do/features/task_creator/team/data/datasources/team_remote_data_source.dart'
     as _i415;
 import 'package:voca_do/features/task_creator/team/data/repositories/team_repository_data.dart'
@@ -86,10 +88,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i217.ProfileRemoteDataSource(gh<_i454.SupabaseClient>()),
     );
     gh.lazySingleton<_i81.BaseTasksBoardRemoteDataSource>(
-      () => _i81.TasksBoardRemoteDataSource(
-        gh<_i302.LocalKeysService>(),
-        gh<_i454.SupabaseClient>(),
-      ),
+      () => _i81.TasksBoardRemoteDataSource(gh<_i454.SupabaseClient>()),
     );
     gh.lazySingleton<_i608.ProfileRepositoryDomain>(
       () =>
@@ -137,6 +136,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i549.TeamRepositoryDomain>(
       () => _i1012.TeamRepositoryData(gh<_i415.BaseTeamRemoteDataSource>()),
+    );
+    gh.factory<_i372.TasksBoardCubit>(
+      () => _i372.TasksBoardCubit(gh<_i471.TasksBoardUseCase>()),
     );
     gh.lazySingleton<_i363.AddTaskScreenRepositoryDomain>(
       () => _i27.AddTaskScreenRepositoryData(
